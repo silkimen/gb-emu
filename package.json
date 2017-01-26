@@ -1,0 +1,16 @@
+{
+  "name": "gb-emu",
+  "version": "0.1.0",
+  "description": "JavaScript / Web-based Gameboy emulator",
+  "main": "index.js",
+  "scripts": {
+    "transpile": "babel src/gb-emu.js --out-file gb-emu.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sefa Ilkimen",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-preset-es2015": "^6.22.0"
+  }
+}
