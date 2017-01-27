@@ -4,13 +4,16 @@
   "description": "JavaScript / Web-based Gameboy emulator",
   "main": "index.js",
   "scripts": {
-    "transpile": "babel src/gb-emu.js --out-file gb-emu.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "gulp test"
   },
   "author": "Sefa Ilkimen",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.22.2",
-    "babel-preset-es2015": "^6.22.0"
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-jasmine": "^2.4.2"
   }
 }
