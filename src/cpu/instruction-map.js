@@ -11,11 +11,11 @@ export const instructionMap = [
   ops.INC_C, ops.DEC_C, ops.LD_C_d8, ops.RRCA,
 
   // 0x10
-  ops.STOP, ops.LD_DE_d16, ops.LD_DE_A, ops.INC_DE
+  ops.STOP, ops.LD_DE_d16, ops.LD_DE_A, ops.INC_DE,
   // 0x14
   ops.INC_D, ops.DEC_D, ops.LD_D_d8, ops.RLA,
   // 0x18
-  ops.JR_r8, ops.ADD_HL_DE, ops.LD_A_DE, ops.DEC_DE
+  ops.JR_r8, ops.ADD_HL_DE, ops.LD_A_DE, ops.DEC_DE,
   // 0x1C
   ops.INC_E, ops.DEC_E, ops.LD_E_d8, ops.RRA,
 
@@ -38,7 +38,7 @@ export const instructionMap = [
   ops.INC_A, ops.DEC_A, ops.LD_A_d8, ops.CCF,
 
   // 0x40
-  ops.LD_B_B, ops.LD_B_C, ops.LD_B_D, ops.LD_B_E
+  ops.LD_B_B, ops.LD_B_C, ops.LD_B_D, ops.LD_B_E,
   // 0x44
   ops.LD_B_H, ops.LD_B_L, ops.LD_B_HL, ops.LD_B_A,
   // 0x48
@@ -65,7 +65,7 @@ export const instructionMap = [
   ops.LD_L_H, ops.LD_L_L, ops.LD_L_HL, ops.LD_L_A,
 
   // 0x70
-  ops.LD_HL_B, ops.LD_HL_C, ops.LD_HL_D, ops.LD_HL_E
+  ops.LD_HL_B, ops.LD_HL_C, ops.LD_HL_D, ops.LD_HL_E,
   // 0x74
   ops.LD_HL_H, ops.LD_HL_L, ops.HALT, ops.LD_HL_A,
   // 0x78

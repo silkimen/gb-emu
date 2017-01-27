@@ -11,11 +11,11 @@ export const cbMap = [
   ops.RRC_H, ops.RRC_L, ops.RRC_HL, ops.RRC_A,
 
   // 0x10
-  ops.RL_B, ops.RL_C, ops.RL_D, ops.RL_E
+  ops.RL_B, ops.RL_C, ops.RL_D, ops.RL_E,
   // 0x14
   ops.RL_H, ops.RL_L, ops.RL_HL, ops.RL_A,
   // 0x18
-  ops.RR_B, ops.RR_C, ops.RR_D, ops.RR_E
+  ops.RR_B, ops.RR_C, ops.RR_D, ops.RR_E,
   // 0x1C
   ops.RR_H, ops.RR_L, ops.RR_HL, ops.RR_A,
 
@@ -38,7 +38,7 @@ export const cbMap = [
   ops.SRL_H, ops.SRL_L, ops.SRL_HL, ops.SRL_A,
 
   // 0x40
-  ops.BIT_0_B, ops.BIT_0_C, ops.BIT_0_D, ops.BIT_0_E
+  ops.BIT_0_B, ops.BIT_0_C, ops.BIT_0_D, ops.BIT_0_E,
   // 0x44
   ops.BIT_0_H, ops.BIT_0_L, ops.BIT_0_HL, ops.BIT_0_A,
   // 0x48
@@ -65,7 +65,7 @@ export const cbMap = [
   ops.BIT_5_H, ops.BIT_5_L, ops.BIT_5_HL, ops.BIT_5_A,
 
   // 0x70
-  ops.BIT_6_B, ops.BIT_6_C, ops.BIT_6_D, ops.BIT_6_E
+  ops.BIT_6_B, ops.BIT_6_C, ops.BIT_6_D, ops.BIT_6_E,
   // 0x74
   ops.BIT_6_H, ops.BIT_6_L, ops.BIT_6_HL, ops.BIT_6_A,
   // 0x78
