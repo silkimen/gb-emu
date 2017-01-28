@@ -1,10 +1,11 @@
 {
   "name": "gb-emu",
   "version": "0.1.0",
-  "description": "JavaScript / Web-based Gameboy emulator",
-  "main": "index.js",
+  "description": "JavaScript / Web-based GameBoy EMUlator",
+  "main": "target/dist/gb-emu.js",
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "prepublish": "gulp build"
   },
   "author": "Sefa Ilkimen",
   "license": "MIT",
@@ -18,5 +19,13 @@
     "gulp-babel": "^6.1.2",
     "gulp-eslint": "^3.0.1",
     "gulp-jasmine": "^2.4.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/silkimen/gb-emu.git"
+  },
+  "bugs": {
+    "url": "https://github.com/silkimen/gb-emu/issues"
+  },
+  "homepage": "https://github.com/silkimen/gb-emu#readme"
 }

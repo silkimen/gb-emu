@@ -18,4 +18,6 @@ gulp.task('test', [ 'transpile' ], () => gulp
   .src([ 'spec/helper.js', 'spec/**/*.spec.js' ])
   .pipe(jasmine()));
 
-gulp.task('default', [ 'transpile' ]);
+gulp.task('build', [ 'lint', 'transpile', 'test' ]);
+
+gulp.task('default', [ 'build' ]);
