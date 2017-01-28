@@ -1,3 +1,5 @@
+/* eslint-disable lines-around-comment */
+
 import * as ops from './operation';
 
 export const cbMap = [

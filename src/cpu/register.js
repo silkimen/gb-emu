@@ -2,7 +2,7 @@ const REG_NAMES = [ 'a', 'b', 'c', 'd', 'e', 'f', 'h', 'l', 'sp', 'pc' ];
 const FLAG_NAMES = [ 'zero', 'subtract', 'half', 'carry' ];
 const FLAG_MASKS = [ 0x80, 0x40, 0x20, 0x10 ];
 
-export const Register = function() {
+export const Register = function () {
   const register = {};
   const flag = {};
 
@@ -18,7 +18,9 @@ export const Register = function() {
     Object.defineProperty(register, name, {
       enumerable: true,
       get: () => registerView[index],
-      set: value => registerView[index] = value
+      set: value => {
+        registerView[index] = value;
+      }
     });
   });
 

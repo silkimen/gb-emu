@@ -1,0 +1,14 @@
+{
+  "extends": "es/2015/client",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "rules": {
+    "dot-location": [ 2, "property" ],
+    "id-length": 0,
+    "no-bitwise": 0,
+    "no-inline-comments": 0,
+    "prefer-reflect": 0
+  }
+}
