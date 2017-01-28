@@ -1,0 +1,168 @@
+31 FE FF       LD SP,$fffe		; $0000  Setup Stack
+
+AF             XOR A			; $0003  Zero the memory from $8000-$9FFF (VRAM)
+21 FF 9F       LD HL,$9fff		; $0004
+           Addr_0007:
+32             LD (HL-),A		; $0007
+CB 7C          BIT 7,H		; $0008
+20 FB          JR NZ, Addr_0007	; $000a
+
+21 26 FF       LD HL,$ff26		; $000c  Setup Audio
+0E 11          LD C,$11		; $000f
+3E 80          LD A,$80		; $0011
+32             LD (HL-),A		; $0013
+E2 0C          LD ($FF00+C),A	; $0014
+0C             INC C			; $0015
+3E F3          LD A,$f3		; $0016
+E2             LD ($FF00+C),A	; $0018
+32             LD (HL-),A		; $0019
+3E 77          LD A,$77		; $001a
+77             LD (HL),A		; $001c
+
+3E FC          LD A,$fc		; $001d  Setup BG palette
+E0 47          LD ($FF00+$47),A	; $001f
+
+11 04 01       LD DE,$0104		; $0021  Convert and load logo data from cart into Video RAM
+21 10 80       LD HL,$8010		; $0024
+           Addr_0027:
+1A             LD A,(DE)		; $0027
+CD 95 00       CALL $0095		; $0028
+CD 96 00       CALL $0096		; $002b
+13             INC DE		; $002e
+7B             LD A,E		; $002f
+FE 34          CP $34		; $0030
+20 F3          JR NZ, Addr_0027	; $0032
+
+11 D8 00       LD DE,$00d8		; $0034  Load 8 additional bytes into Video RAM
+06 08          LD B,$08		; $0037
+           Addr_0039:
+1A             LD A,(DE)		; $0039
+13             INC DE		; $003a
+22             LD (HL+),A		; $003b
+23             INC HL		; $003c
+05             DEC B			; $003d
+20 F9          JR NZ, Addr_0039	; $003e
+
+3E 19          LD A,$19		; $0040  Setup background tilemap
+EA 10 99       LD ($9910),A	; $0042
+21 2F 99       LD HL,$992f		; $0045
+           Addr_0048:
+0E 0C          LD C,$0c		; $0048
+           Addr_004A:
+3D             DEC A			; $004a
+28 08          JR Z, Addr_0055	; $004b
+32             LD (HL-),A		; $004d
+0D             DEC C			; $004e
+20 F9          JR NZ, Addr_004A	; $004f
+2E 0F          LD L,$0f		; $0051
+18 F3          JR Addr_0048	; $0053
+
+; === Scroll logo on screen, and play logo sound===
+
+           Addr_0055:
+67             LD H,A		; $0055  Initialize scroll count, H=0
+3E 64          LD A,$64		; $0056
+57             LD D,A		; $0058  set loop count, D=$64
+E0 42          LD ($FF00+$42),A	; $0059  Set vertical scroll register
+3E 91          LD A,$91		; $005b
+E0 40          LD ($FF00+$40),A	; $005d  Turn on LCD, showing Background
+04             INC B			; $005f  Set B=1
+           Addr_0060:
+1E 02          LD E,$02		; $0060
+           Addr_0062:
+0E 0C          LD C,$0c		; $0062
+           Addr_0064:
+F0 44          LD A,($FF00+$44)	; $0064  wait for screen frame
+FE 90          CP $90		; $0066
+20 FA          JR NZ, Addr_0064	; $0068
+0D             DEC C			; $006a
+20 F7          JR NZ, Addr_0064	; $006b
+1D             DEC E			; $006d
+20 F2          JR NZ, Addr_0062	; $006e
+
+0E 13          LD C,$13		; $0070
+24             INC H			; $0072  increment scroll count
+7C             LD A,H		; $0073
+1E 83          LD E,$83		; $0074
+FE 62          CP $62		; $0076  $62 counts in, play sound #1
+28 06          JR Z, Addr_0080	; $0078
+1E C1          LD E,$c1		; $007a
+FE 64          CP $64		; $007c
+20 06          JR NZ, Addr_0086	; $007e  $64 counts in, play sound #2
+           Addr_0080:
+7B             LD A,E		; $0080  play sound
+E2             LD ($FF00+C),A	; $0081
+0C             INC C			; $0082
+3E 87          LD A,$87		; $0083
+E2             LD ($FF00+C),A	; $0085
+           Addr_0086:
+F0 42          LD A,($FF00+$42)	; $0086
+90             SUB B			; $0088
+E0 42          LD ($FF00+$42),A	; $0089  scroll logo up if B=1
+15             DEC D			; $008b
+20 D2          JR NZ, Addr_0060	; $008c
+
+05             DEC B			; $008e  set B=0 first time
+20 4F          JR NZ, Addr_00E0	; $008f    ... next time, cause jump to "Nintendo Logo check"
+
+16 20          LD D,$20		; $0091  use scrolling loop to pause
+18 CB          JR Addr_0060	; $0093
+
+; ==== Graphic routine ====
+
+4F             LD C,A		; $0095  "Double up" all the bits of the graphics data
+06 04          LD B,$04		; $0096     and store in Video RAM
+           Addr_0098:
+C5             PUSH BC		; $0098
+CB 11          RL C			; $0099
+17             RLA			; $009b
+C1             POP BC		; $009c
+CB 11          RL C			; $009d
+17             RLA			; $009f
+05             DEC B			; $00a0
+20 F5          JR NZ, Addr_0098	; $00a1
+22             LD (HL+),A		; $00a3
+23             INC HL		; $00a4
+22             LD (HL+),A		; $00a5
+23             INC HL		; $00a6
+C9             RET			; $00a7
+
+           Addr_00A8:
+;Nintendo Logo
+.DB $CE,$ED,$66,$66,$CC,$0D,$00,$0B,$03,$73,$00,$83,$00,$0C,$00,$0D
+.DB $00,$08,$11,$1F,$88,$89,$00,$0E,$DC,$CC,$6E,$E6,$DD,$DD,$D9,$99
+.DB $BB,$BB,$67,$63,$6E,$0E,$EC,$CC,$DD,$DC,$99,$9F,$BB,$B9,$33,$3E
+
+           Addr_00D8:
+;More video data
+.DB $3C,$42,$B9,$A5,$B9,$A5,$42,$3C
+
+; ===== Nintendo logo comparison routine =====
+
+           Addr_00E0:
+21 04 01       LD HL,$0104		; $00e0	; point HL to Nintendo logo in cart
+11 A8 00       LD DE,$00a8		; $00e3	; point DE to Nintendo logo in DMG rom
+
+           Addr_00E6:
+1A             LD A,(DE)		; $00e6
+13             INC DE		; $00e7
+BE             CP (HL)		; $00e8	;compare logo data in cart to DMG rom
+20 FE          JR NZ,$fe		; $00e9	;if not a match, lock up here
+23             INC HL		; $00eb
+7D             LD A,L		; $00ec
+FE             CP $34		; $00ed	;do this for $30 bytes
+34 20 F5       JR NZ, Addr_00E6	; $00ef
+
+06 19          LD B,$19		; $00f1
+78             LD A,B		; $00f3
+           Addr_00F4:
+86             ADD (HL)		; $00f4
+23             INC HL		; $00f5
+05             DEC B			; $00f6
+20 FB          JR NZ, Addr_00F4	; $00f7
+86             ADD (HL)		; $00f9
+20 FE          JR NZ,$fe		; $00fa	; if $19 + bytes from $0134-$014D  don't add to $00
+          ;  ... lock up
+
+3E 10          LD A,$01		; $00fc
+E0 50          LD ($FF00+$50),A	; $00fe	;turn off DMG rom
