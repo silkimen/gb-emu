@@ -2,7 +2,7 @@
 
 import * as ops from './operation';
 
-export const instructionMap = [
+export default [
   // 0x00
   ops.NOOP, ops.LD_BC_d16, ops.LD_BC_A, ops.INC_BC,
   // 0x04
@@ -33,7 +33,7 @@ export const instructionMap = [
   // 0x30
   ops.JR_NC_r8, ops.LD_SP_d16, ops.LD_HLm_A, ops.INC_SP,
   // 0x34
-  ops.INC_HL, ops.DEC_HL, ops.LD_HL_d8, ops.SCF,
+  ops.INC_$HL, ops.DEC_HL, ops.LD_HL_d8, ops.SCF,
   // 0x38
   ops.JR_C_r8, ops.ADD_HL_SP, ops.LD_A_HLm, ops.DEC_SP,
   // 0x3C
@@ -130,7 +130,7 @@ export const instructionMap = [
   ops.CALL_C_a16, ops.INVALID, ops.SBC_A_d8, ops.RST18h,
 
   // 0xE0
-  ops.LDH_a8_A, ops.POP_HL, ops.LD_C_A, ops.INVALID,
+  ops.LD_$a8_A, ops.POP_HL, ops.LD_$C_A, ops.INVALID,
   // 0xE4
   ops.INVALID, ops.PUSH_HL, ops.AND_d8, ops.RST_20h,
   // 0xE8
@@ -139,7 +139,7 @@ export const instructionMap = [
   ops.INVALID, ops.INVALID, ops.XOR_d8, ops.RST_28h,
 
   // 0xF0
-  ops.LDH_A_a8, ops.POP_AF, ops.LD_A_C, ops.DI,
+  ops.LD_A_$a8, ops.POP_AF, ops.LD_A_$C, ops.DI,
   // 0xF4
   ops.INVALID, ops.PUSH_AF, ops.OR_d8, ops.RST_30h,
   // 0xF8

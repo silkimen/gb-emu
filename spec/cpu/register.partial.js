@@ -1,4 +1,4 @@
-const Register = require(__base + 'cpu/register').Register;
+const Register = require(`${__base}cpu/register`).Register;
 
 const REG_NAMES = [ 'a', 'b', 'c', 'd', 'e', 'f', 'h', 'l', 'sp', 'pc' ];
 

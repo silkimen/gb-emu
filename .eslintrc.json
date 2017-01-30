@@ -1,14 +1,23 @@
 {
+  "env": {
+    "jasmine": true
+  },
   "extends": "es/2015/client",
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
   },
+  "globals": {
+    "__base": false
+  },
   "rules": {
     "dot-location": [ 2, "property" ],
+    "global-require": 0,
     "id-length": 0,
+    "new-cap": 0,
     "no-bitwise": 0,
     "no-inline-comments": 0,
+    "no-plusplus": 0,
     "prefer-reflect": 0
   }
 }

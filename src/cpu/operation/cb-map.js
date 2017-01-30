@@ -1,8 +1,8 @@
 /* eslint-disable lines-around-comment */
 
-import * as ops from './operation';
+import * as ops from './cb-operation';
 
-export const cbMap = [
+export default [
   // 0x00
   ops.RLC_B, ops.RLC_C, ops.RLC_D, ops.RLC_E,
   // 0x04

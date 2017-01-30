@@ -1,4 +1,4 @@
 describe('CPU', () => {
-  require('./operation.partial');
+  require('./operation/operation.partial');
   require('./register.partial');
 });
