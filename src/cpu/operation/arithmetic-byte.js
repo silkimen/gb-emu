@@ -35,39 +35,35 @@ export const INC_$HL = state => {
 
 /* DEC
 *******************************************/
-export const DEC_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const DEC_B = state => {
-  state.register.b = (state.register.b - 1) & 0xFF;
-  state.flag.zero = state.register.b === 0;
+const DEC_factory = regName => state => {
+  state.register[regName] = (state.register[regName] - 1) & 0xFF;
+  state.flag.zero = state.register[regName] === 0;
   state.flag.subtract = true;
-  state.flag.half = (state.register.b & 0xF) === 0xF;
+  state.flag.half = (state.register[regName] & 0xF) === 0xF;
 };
 
-export const DEC_C = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const DEC_A = DEC_factory('a');
 
-export const DEC_D = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const DEC_B = DEC_factory('b');
 
-export const DEC_E = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const DEC_C = DEC_factory('c');
 
-export const DEC_H = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const DEC_D = DEC_factory('d');
 
-export const DEC_L = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const DEC_E = DEC_factory('e');
 
-export const DEC_HL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+export const DEC_H = DEC_factory('h');
+
+export const DEC_L = DEC_factory('l');
+
+export const DEC_$HL = state => {
+  const address = (state.register.h << 8) + state.register.l;
+  const value = (state.mmu.read(address) - 1) & 0xFF;
+
+  state.mmu.write(address, value);
+  state.flag.zero = value === 0;
+  state.flag.subtract = true;
+  state.flag.half = (value & 0xF) === 0xF;
 };
 
 /* ADD

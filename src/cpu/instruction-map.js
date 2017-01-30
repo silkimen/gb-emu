@@ -33,7 +33,7 @@ export default [
   // 0x30
   ops.JR_NC_r8, ops.LD_SP_d16, ops.LD_HLm_A, ops.INC_SP,
   // 0x34
-  ops.INC_$HL, ops.DEC_HL, ops.LD_HL_d8, ops.SCF,
+  ops.INC_$HL, ops.DEC_$HL, ops.LD_HL_d8, ops.SCF,
   // 0x38
   ops.JR_C_r8, ops.ADD_HL_SP, ops.LD_A_HLm, ops.DEC_SP,
   // 0x3C
