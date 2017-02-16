@@ -68,40 +68,51 @@ export const DEC_$HL = state => {
 
 /* ADD
 *******************************************/
-export const ADD_A_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+const ADD_factory = regName => state => {
+  const sum = state.register.a + state.register[regName];
+
+  state.flag.carry = sum > 0xFF;
+  state.flag.half = (sum & 0xF) < (state.register.a & 0xF);
+  state.flag.subtract = false;
+  state.register.a = sum & 0xFF;
+  state.flag.zero = state.register.a === 0;
 };
 
-export const ADD_A_B = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const ADD_A_A = ADD_factory('a');
 
-export const ADD_A_C = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const ADD_A_B = ADD_factory('b');
 
-export const ADD_A_D = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const ADD_A_C = ADD_factory('c');
 
-export const ADD_A_E = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const ADD_A_D = ADD_factory('d');
 
-export const ADD_A_H = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const ADD_A_E = ADD_factory('e');
 
-export const ADD_A_L = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const ADD_A_H = ADD_factory('h');
+
+export const ADD_A_L = ADD_factory('l');
 
 export const ADD_A_HL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  const input = state.mmu.read((state.register.h << 8) + state.register.l);
+  const sum = state.register.a + input;
+
+  state.flag.carry = sum > 0xFF;
+  state.flag.half = (sum & 0xF) < (state.register.a & 0xF);
+  state.flag.subtract = false;
+  state.register.a = sum & 0xFF;
+  state.flag.zero = state.register.a === 0;
 };
 
 export const ADD_A_d8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  const input = state.mmu.read(state.register.pc + 1);
+  const sum = state.register.a + input;
+
+  state.flag.carry = sum > 0xFF;
+  state.flag.half = (sum & 0xF) < (state.register.a & 0xF);
+  state.flag.subtract = false;
+  state.register.a = sum & 0xFF;
+  state.flag.zero = state.register.a === 0;
+  state.register.pc = (state.register.pc + 1) & 0xFFFF;
 };
 
 /* ADC
