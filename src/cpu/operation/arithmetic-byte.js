@@ -117,40 +117,54 @@ export const ADD_A_d8 = state => {
 
 /* ADC
 *******************************************/
-export const ADC_A_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+const ADC_factory = regName => state => {
+  const sum = state.register.a + state.register[regName] + (state.flag.carry ? 1 : 0);
+  const halfsum = (state.register.a & 0xF) + (state.register[regName] & 0xF) + (state.flag.carry ? 1 : 0);
+
+  state.flag.carry = sum > 0xFF;
+  state.flag.half = halfsum > 0xF;
+  state.flag.subtract = false;
+  state.register.a = sum & 0xFF;
+  state.flag.zero = state.register.a === 0;
 };
 
-export const ADC_A_B = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const ADC_A_A = ADC_factory('a');
 
-export const ADC_A_C = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const ADC_A_B = ADC_factory('b');
 
-export const ADC_A_D = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const ADC_A_C = ADC_factory('c');
 
-export const ADC_A_E = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const ADC_A_D = ADC_factory('d');
 
-export const ADC_A_H = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const ADC_A_E = ADC_factory('e');
 
-export const ADC_A_L = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const ADC_A_H = ADC_factory('h');
+
+export const ADC_A_L = ADC_factory('l');
 
 export const ADC_A_HL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  const input = state.mmu.read((state.register.h << 8) + state.register.l);
+  const sum = state.register.a + input + (state.flag.carry ? 1 : 0);
+  const halfsum = (state.register.a & 0xF) + input + (state.flag.carry ? 1 : 0);
+
+  state.flag.carry = sum > 0xFF;
+  state.flag.half = halfsum > 0xF;
+  state.flag.subtract = false;
+  state.register.a = sum & 0xFF;
+  state.flag.zero = state.register.a === 0;
 };
 
 export const ADC_A_d8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  const input = state.mmu.read(state.register.pc + 1);
+  const sum = state.register.a + input + (state.flag.carry ? 1 : 0);
+  const halfsum = (state.register.a & 0xF) + input + (state.flag.carry ? 1 : 0);
+
+  state.flag.carry = sum > 0xFF;
+  state.flag.half = halfsum > 0xF;
+  state.flag.subtract = false;
+  state.register.a = sum & 0xFF;
+  state.flag.zero = state.register.a === 0;
+  state.register.pc = (state.register.pc + 1) & 0xFFFF;
 };
 
 /* SUB
