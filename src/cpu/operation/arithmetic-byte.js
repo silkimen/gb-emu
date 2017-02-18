@@ -169,78 +169,101 @@ export const ADC_A_d8 = state => {
 
 /* SUB
 *******************************************/
-export const SUB_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+const SUB_factory = regName => state => {
+  const sum = state.register.a - state.register[regName];
+
+  state.flag.carry = sum < 0;
+  state.flag.half = (state.register.a & 0xF) < (sum & 0xF);
+  state.flag.subtract = true;
+  state.register.a = sum & 0xFF;
+  state.flag.zero = state.register.a === 0;
 };
 
-export const SUB_B = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const SUB_A = SUB_factory('a');
 
-export const SUB_C = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const SUB_B = SUB_factory('b');
 
-export const SUB_D = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const SUB_C = SUB_factory('c');
 
-export const SUB_E = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const SUB_D = SUB_factory('d');
 
-export const SUB_H = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const SUB_E = SUB_factory('e');
 
-export const SUB_L = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const SUB_H = SUB_factory('h');
+
+export const SUB_L = SUB_factory('l');
 
 export const SUB_HL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  const input = state.mmu.read((state.register.h << 8) + state.register.l);
+  const sum = state.register.a - input;
+
+  state.flag.carry = sum < 0;
+  state.flag.half = (state.register.a & 0xF) < (sum & 0xF);
+  state.flag.subtract = true;
+  state.register.a = sum & 0xFF;
+  state.flag.zero = state.register.a === 0;
 };
 
 export const SUB_d8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  const input = state.mmu.read(state.register.pc + 1);
+  const sum = state.register.a - input;
+
+  state.flag.carry = sum < 0;
+  state.flag.half = (state.register.a & 0xF) < (sum & 0xF);
+  state.flag.subtract = true;
+  state.register.a = sum & 0xFF;
+  state.flag.zero = state.register.a === 0;
+  state.register.pc = (state.register.pc + 1) & 0xFFFF;
 };
 
 /* SBC
 *******************************************/
-export const SBC_A_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+const SBC_factory = regName => state => {
+  const sum = state.register.a - state.register[regName] - (state.flag.carry ? 1 : 0);
+  const halfsum = (state.register.a & 0xF) - (state.register[regName] & 0xF) - (state.flag.carry ? 1 : 0);
+
+  state.flag.carry = sum < 0;
+  state.flag.half = halfsum < 0;
+  state.flag.subtract = true;
+  state.register.a = sum & 0xFF;
+  state.flag.zero = state.register.a === 0;
+};
+
+export const SBC_A_A = SBC_factory('a');
+
+export const SBC_A_B = SBC_factory('b');
+
+export const SBC_A_C = SBC_factory('c');
+
+export const SBC_A_D = SBC_factory('d');
+
+export const SBC_A_E = SBC_factory('e');
+
+export const SBC_A_H = SBC_factory('h');
+
+export const SBC_A_L = SBC_factory('l');
+
+export const SBC_A_HL = state => {
+  const input = state.mmu.read((state.register.h << 8) + state.register.l);
+  const sum = state.register.a - input - (state.flag.carry ? 1 : 0);
+
+  state.flag.carry = sum < 0;
+  state.flag.half = (state.register.a & 0xF) < (sum & 0xF);
+  state.flag.subtract = true;
+  state.register.a = sum & 0xFF;
+  state.flag.zero = state.register.a === 0;
 };
 
 export const SBC_A_d8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+  const input = state.mmu.read(state.register.pc + 1);
+  const sum = state.register.a - input - (state.flag.carry ? 1 : 0);
 
-export const SBC_A_B = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const SBC_A_C = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const SBC_A_D = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const SBC_A_E = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const SBC_A_H = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const SBC_A_L = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const SBC_A_HL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.flag.carry = sum < 0;
+  state.flag.half = (state.register.a & 0xF) < (sum & 0xF);
+  state.flag.subtract = true;
+  state.register.a = sum & 0xFF;
+  state.flag.zero = state.register.a === 0;
+  state.register.pc = (state.register.pc + 1) & 0xFFFF;
 };
 
 /* AND

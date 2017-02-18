@@ -13,6 +13,8 @@ beforeEach(() => {
   state = { register, flag, mmu };
 });
 
+/* INC
+*******************************************/
 describe('8 bit increment operation', () => {
   // generate INC tests for A to L
   REG_NAMES_2_BE_TESTED.forEach(name => {
@@ -60,6 +62,8 @@ describe('8 bit increment operation', () => {
   });
 });
 
+/* DEC
+*******************************************/
 describe('8 bit decrement operation', () => {
   // generate DEC tests for A to L
   REG_NAMES_2_BE_TESTED.forEach(name => {
@@ -102,6 +106,8 @@ describe('8 bit decrement operation', () => {
   });
 });
 
+/* ADD
+*******************************************/
 describe('8 bit add operation', () => {
   it('adds value A to A', () => {
     state.register.a = 1;
@@ -219,7 +225,9 @@ describe('8 bit add operation', () => {
   });
 });
 
-describe('8 bit add + carry operation', () => {
+/* ADC
+*******************************************/
+describe('8 bit add with carry operation', () => {
   it('adds value A and carry to A', () => {
     state.flag.carry = true;
     state.register.a = 1;
@@ -381,7 +389,7 @@ describe('8 bit add + carry operation', () => {
     expect(state.flag.carry).toBe(true);
   });
 
-  it('adds immediate value to A', () => {
+  it('adds immediate value and carry to A', () => {
     state.register.pc = 0;
     state.mmu.write(1, 1);
     state.mmu.write(2, 1);
@@ -446,6 +454,334 @@ describe('8 bit add + carry operation', () => {
     expect(state.register.a).toBe(0);
     expect(state.flag.zero).toBe(true);
     expect(state.flag.subtract).toBe(false);
+    expect(state.flag.half).toBe(true);
+    expect(state.flag.carry).toBe(true);
+    expect(state.register.pc).toBe(6);
+  });
+});
+
+/* SUB
+*******************************************/
+describe('8 bit subtract operation', () => {
+  it('subtracts value A from A', () => {
+    state.register.a = 1;
+    op.SUB_A.call(null, state);
+    expect(state.register.a).toBe(0);
+    expect(state.flag.zero).toBe(true);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(false);
+    expect(state.flag.carry).toBe(false);
+  });
+
+  // generate ADD tests for B to L
+  REG_NAMES_2_BE_TESTED.slice(1).forEach(name => {
+    const upperName = name.toUpperCase();
+
+    it(`subtracts value ${upperName} from A`, () => {
+      state.register[name] = 1;
+
+      state.register.a = 1;
+      op[`SUB_${upperName}`].call(null, state);
+      expect(state.register.a).toBe(0);
+      expect(state.flag.zero).toBe(true);
+      expect(state.flag.subtract).toBe(true);
+      expect(state.flag.half).toBe(false);
+      expect(state.flag.carry).toBe(false);
+
+      state.register.a = 0x10;
+      op[`SUB_${upperName}`].call(null, state);
+      expect(state.register.a).toBe(0x0F);
+      expect(state.flag.zero).toBe(false);
+      expect(state.flag.subtract).toBe(true);
+      expect(state.flag.half).toBe(true);
+      expect(state.flag.carry).toBe(false);
+
+      state.register.a = 0;
+      op[`SUB_${upperName}`].call(null, state);
+      expect(state.register.a).toBe(0xFF);
+      expect(state.flag.zero).toBe(false);
+      expect(state.flag.subtract).toBe(true);
+      expect(state.flag.half).toBe(true);
+      expect(state.flag.carry).toBe(true);
+    });
+  });
+
+  it('subtracts value of address (HL) from A', () => {
+    state.register.h = 0;
+    state.register.l = 0;
+    state.mmu.write('0', '1');
+
+    state.register.a = 1;
+    op.SUB_HL.call(null, state);
+    expect(state.register.a).toBe(0);
+    expect(state.flag.zero).toBe(true);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(false);
+    expect(state.flag.carry).toBe(false);
+
+    state.register.a = 0x10;
+    op.SUB_HL.call(null, state);
+    expect(state.register.a).toBe(0x0F);
+    expect(state.flag.zero).toBe(false);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(true);
+    expect(state.flag.carry).toBe(false);
+
+    state.register.a = 0;
+    op.SUB_HL.call(null, state);
+    expect(state.register.a).toBe(0xFF);
+    expect(state.flag.zero).toBe(false);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(true);
+    expect(state.flag.carry).toBe(true);
+  });
+
+  it('subtracts immediate value from A', () => {
+    state.register.pc = 0;
+    state.mmu.write(1, 1);
+    state.mmu.write(2, 1);
+    state.mmu.write(3, 1);
+
+    state.register.a = 1;
+    op.SUB_d8.call(null, state);
+    expect(state.register.a).toBe(0);
+    expect(state.flag.zero).toBe(true);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(false);
+    expect(state.flag.carry).toBe(false);
+    expect(state.register.pc).toBe(1);
+
+    state.register.a = 0x10;
+    op.SUB_d8.call(null, state);
+    expect(state.register.a).toBe(0x0F);
+    expect(state.flag.zero).toBe(false);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(true);
+    expect(state.flag.carry).toBe(false);
+    expect(state.register.pc).toBe(2);
+
+    state.register.a = 0;
+    op.SUB_d8.call(null, state);
+    expect(state.register.a).toBe(0xFF);
+    expect(state.flag.zero).toBe(false);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(true);
+    expect(state.flag.carry).toBe(true);
+    expect(state.register.pc).toBe(3);
+  });
+});
+
+/* SBC
+*******************************************/
+describe('8 bit subtract with carry operation', () => {
+  it('subtracts value A with carry from A', () => {
+    state.flag.carry = false;
+    state.register.a = 1;
+    op.SBC_A_A.call(null, state);
+    expect(state.register.a).toBe(0);
+    expect(state.flag.zero).toBe(true);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(false);
+    expect(state.flag.carry).toBe(false);
+
+    state.flag.carry = true;
+    state.register.a = 1;
+    op.SBC_A_A.call(null, state);
+    expect(state.register.a).toBe(0xFF);
+    expect(state.flag.zero).toBe(false);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(true);
+    expect(state.flag.carry).toBe(true);
+  });
+
+  // generate ADD tests for B to L
+  REG_NAMES_2_BE_TESTED.slice(1).forEach(name => {
+    const upperName = name.toUpperCase();
+
+    it(`subtracts value ${upperName} with carry from A`, () => {
+      state.register[name] = 1;
+
+      state.flag.carry = false;
+      state.register.a = 1;
+      op[`SBC_A_${upperName}`].call(null, state);
+      expect(state.register.a).toBe(0);
+      expect(state.flag.zero).toBe(true);
+      expect(state.flag.subtract).toBe(true);
+      expect(state.flag.half).toBe(false);
+      expect(state.flag.carry).toBe(false);
+
+      state.flag.carry = true;
+      state.register.a = 1;
+      op[`SBC_A_${upperName}`].call(null, state);
+      expect(state.register.a).toBe(0xFF);
+      expect(state.flag.zero).toBe(false);
+      expect(state.flag.subtract).toBe(true);
+      expect(state.flag.half).toBe(true);
+      expect(state.flag.carry).toBe(true);
+
+      state.flag.carry = false;
+      state.register.a = 0x10;
+      op[`SBC_A_${upperName}`].call(null, state);
+      expect(state.register.a).toBe(0x0F);
+      expect(state.flag.zero).toBe(false);
+      expect(state.flag.subtract).toBe(true);
+      expect(state.flag.half).toBe(true);
+      expect(state.flag.carry).toBe(false);
+
+      state.flag.carry = true;
+      state.register.a = 0x10;
+      op[`SBC_A_${upperName}`].call(null, state);
+      expect(state.register.a).toBe(0x0E);
+      expect(state.flag.zero).toBe(false);
+      expect(state.flag.subtract).toBe(true);
+      expect(state.flag.half).toBe(true);
+      expect(state.flag.carry).toBe(false);
+
+      state.flag.carry = false;
+      state.register.a = 0;
+      op[`SBC_A_${upperName}`].call(null, state);
+      expect(state.register.a).toBe(0xFF);
+      expect(state.flag.zero).toBe(false);
+      expect(state.flag.subtract).toBe(true);
+      expect(state.flag.half).toBe(true);
+      expect(state.flag.carry).toBe(true);
+
+      state.flag.carry = true;
+      state.register.a = 0;
+      op[`SBC_A_${upperName}`].call(null, state);
+      expect(state.register.a).toBe(0xFE);
+      expect(state.flag.zero).toBe(false);
+      expect(state.flag.subtract).toBe(true);
+      expect(state.flag.half).toBe(true);
+      expect(state.flag.carry).toBe(true);
+    });
+  });
+
+  it('subtracts value of address (HL) with carry from A', () => {
+    state.register.h = 0;
+    state.register.l = 0;
+    state.mmu.write('0', '1');
+
+    state.flag.carry = false;
+    state.register.a = 1;
+    op.SBC_A_HL.call(null, state);
+    expect(state.register.a).toBe(0);
+    expect(state.flag.zero).toBe(true);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(false);
+    expect(state.flag.carry).toBe(false);
+
+    state.flag.carry = true;
+    state.register.a = 2;
+    op.SBC_A_HL.call(null, state);
+    expect(state.register.a).toBe(0);
+    expect(state.flag.zero).toBe(true);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(false);
+    expect(state.flag.carry).toBe(false);
+
+    state.flag.carry = false;
+    state.register.a = 0x10;
+    op.SBC_A_HL.call(null, state);
+    expect(state.register.a).toBe(0x0F);
+    expect(state.flag.zero).toBe(false);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(true);
+    expect(state.flag.carry).toBe(false);
+
+    state.flag.carry = true;
+    state.register.a = 0x10;
+    op.SBC_A_HL.call(null, state);
+    expect(state.register.a).toBe(0x0E);
+    expect(state.flag.zero).toBe(false);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(true);
+    expect(state.flag.carry).toBe(false);
+
+    state.flag.carry = false;
+    state.register.a = 0;
+    op.SBC_A_HL.call(null, state);
+    expect(state.register.a).toBe(0xFF);
+    expect(state.flag.zero).toBe(false);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(true);
+    expect(state.flag.carry).toBe(true);
+
+    state.flag.carry = true;
+    state.register.a = 0;
+    op.SBC_A_HL.call(null, state);
+    expect(state.register.a).toBe(0xFE);
+    expect(state.flag.zero).toBe(false);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(true);
+    expect(state.flag.carry).toBe(true);
+  });
+
+  it('subtracts immediate value and carry from A', () => {
+    state.register.pc = 0;
+    state.mmu.write(1, 1);
+    state.mmu.write(2, 1);
+    state.mmu.write(3, 1);
+    state.mmu.write(4, 1);
+    state.mmu.write(5, 1);
+    state.mmu.write(6, 1);
+
+    state.flag.carry = false;
+    state.register.a = 1;
+    op.SBC_A_d8.call(null, state);
+    expect(state.register.a).toBe(0);
+    expect(state.flag.zero).toBe(true);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(false);
+    expect(state.flag.carry).toBe(false);
+    expect(state.register.pc).toBe(1);
+
+    state.flag.carry = true;
+    state.register.a = 2;
+    op.SBC_A_d8.call(null, state);
+    expect(state.register.a).toBe(0);
+    expect(state.flag.zero).toBe(true);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(false);
+    expect(state.flag.carry).toBe(false);
+    expect(state.register.pc).toBe(2);
+
+    state.flag.carry = false;
+    state.register.a = 0x10;
+    op.SBC_A_d8.call(null, state);
+    expect(state.register.a).toBe(0x0F);
+    expect(state.flag.zero).toBe(false);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(true);
+    expect(state.flag.carry).toBe(false);
+    expect(state.register.pc).toBe(3);
+
+    state.flag.carry = true;
+    state.register.a = 0x10;
+    op.SBC_A_d8.call(null, state);
+    expect(state.register.a).toBe(0x0E);
+    expect(state.flag.zero).toBe(false);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(true);
+    expect(state.flag.carry).toBe(false);
+    expect(state.register.pc).toBe(4);
+
+    state.flag.carry = false;
+    state.register.a = 0;
+    op.SBC_A_d8.call(null, state);
+    expect(state.register.a).toBe(0xFF);
+    expect(state.flag.zero).toBe(false);
+    expect(state.flag.subtract).toBe(true);
+    expect(state.flag.half).toBe(true);
+    expect(state.flag.carry).toBe(true);
+    expect(state.register.pc).toBe(5);
+
+    state.flag.carry = true;
+    state.register.a = 1;
+    op.SBC_A_d8.call(null, state);
+    expect(state.register.a).toBe(0xFF);
+    expect(state.flag.zero).toBe(false);
+    expect(state.flag.subtract).toBe(true);
     expect(state.flag.half).toBe(true);
     expect(state.flag.carry).toBe(true);
     expect(state.register.pc).toBe(6);
