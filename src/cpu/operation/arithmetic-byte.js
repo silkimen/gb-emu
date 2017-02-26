@@ -268,40 +268,46 @@ export const SBC_A_d8 = state => {
 
 /* AND
 *******************************************/
-export const AND_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+const AND_factory = regName => state => {
+  state.register.a &= state.register[regName];
+
+  state.flag.zero = state.register.a === 0;
+  state.flag.subtract = false;
+  state.flag.half = true;
+  state.flag.carry = false;
 };
 
-export const AND_B = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const AND_A = AND_factory('a');
 
-export const AND_C = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const AND_B = AND_factory('b');
 
-export const AND_D = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const AND_C = AND_factory('c');
 
-export const AND_E = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const AND_D = AND_factory('d');
 
-export const AND_H = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const AND_E = AND_factory('e');
 
-export const AND_L = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const AND_H = AND_factory('h');
+
+export const AND_L = AND_factory('l');
 
 export const AND_HL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.a &= state.mmu.read((state.register.h << 8) + state.register.l);
+
+  state.flag.zero = state.register.a === 0;
+  state.flag.subtract = false;
+  state.flag.half = true;
+  state.flag.carry = false;
 };
 
 export const AND_d8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.a &= state.mmu.read(state.register.pc + 1);
+
+  state.flag.zero = state.register.a === 0;
+  state.flag.subtract = false;
+  state.flag.half = true;
+  state.flag.carry = false;
+  state.register.pc = (state.register.pc + 1) & 0xFFFF;
 };
 
 /* XOR
