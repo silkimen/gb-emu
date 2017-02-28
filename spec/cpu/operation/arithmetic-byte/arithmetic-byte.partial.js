@@ -4,6 +4,7 @@ require('./and.partial');
 require('./cp.partial');
 require('./dec.partial');
 require('./inc.partial');
+require('./misc.partial');
 require('./or.partial');
 require('./sbc.partial');
 require('./sub.partial');

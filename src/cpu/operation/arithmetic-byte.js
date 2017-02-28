@@ -444,18 +444,29 @@ export const CP_d8 = state => {
 
 /* misc
 *******************************************/
+
+// decimal adjust accumulator
 export const DAA = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };
 
+// complement value of A
 export const CPL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.a ^= 0xFF;
+  state.flag.subtract = true;
+  state.flag.half = true;
 };
 
+// set carry flag
 export const SCF = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.flag.subtract = false;
+  state.flag.half = false;
+  state.flag.carry = true;
 };
 
+// complement carry flag
 export const CCF = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.flag.subtract = false;
+  state.flag.half = false;
+  state.flag.carry = !state.flag.carry;
 };
