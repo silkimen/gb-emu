@@ -1,7 +1,10 @@
 require('./adc.partial');
 require('./add.partial');
 require('./and.partial');
+require('./cp.partial');
 require('./dec.partial');
 require('./inc.partial');
+require('./or.partial');
 require('./sbc.partial');
 require('./sub.partial');
+require('./xor.partial');

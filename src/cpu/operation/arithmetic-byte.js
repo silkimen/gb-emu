@@ -312,116 +312,134 @@ export const AND_d8 = state => {
 
 /* XOR
 *******************************************/
-export const XOR_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+const XOR_factory = regName => state => {
+  state.register.a ^= state.register[regName];
+
+  state.flag.zero = state.register.a === 0;
+  state.flag.subtract = false;
+  state.flag.half = false;
+  state.flag.carry = false;
 };
 
-export const XOR_B = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const XOR_A = XOR_factory('a');
 
-export const XOR_C = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const XOR_B = XOR_factory('b');
 
-export const XOR_D = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const XOR_C = XOR_factory('c');
 
-export const XOR_E = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const XOR_D = XOR_factory('d');
 
-export const XOR_H = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const XOR_E = XOR_factory('e');
 
-export const XOR_L = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const XOR_H = XOR_factory('h');
+
+export const XOR_L = XOR_factory('l');
 
 export const XOR_HL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.a ^= state.mmu.read((state.register.h << 8) + state.register.l);
+
+  state.flag.zero = state.register.a === 0;
+  state.flag.subtract = false;
+  state.flag.half = false;
+  state.flag.carry = false;
 };
 
 export const XOR_d8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.a ^= state.mmu.read(state.register.pc + 1);
+
+  state.flag.zero = state.register.a === 0;
+  state.flag.subtract = false;
+  state.flag.half = false;
+  state.flag.carry = false;
+  state.register.pc = (state.register.pc + 1) & 0xFFFF;
 };
 
 /* OR
 *******************************************/
-export const OR_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+const OR_factory = regName => state => {
+  state.register.a |= state.register[regName];
+
+  state.flag.zero = state.register.a === 0;
+  state.flag.subtract = false;
+  state.flag.half = false;
+  state.flag.carry = false;
 };
 
-export const OR_B = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const OR_A = OR_factory('a');
 
-export const OR_C = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const OR_B = OR_factory('b');
 
-export const OR_D = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const OR_C = OR_factory('c');
 
-export const OR_E = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const OR_D = OR_factory('d');
 
-export const OR_H = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const OR_E = OR_factory('e');
 
-export const OR_L = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const OR_H = OR_factory('h');
+
+export const OR_L = OR_factory('l');
 
 export const OR_HL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.a |= state.mmu.read((state.register.h << 8) + state.register.l);
+
+  state.flag.zero = state.register.a === 0;
+  state.flag.subtract = false;
+  state.flag.half = false;
+  state.flag.carry = false;
 };
 
 export const OR_d8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.a |= state.mmu.read(state.register.pc + 1);
+
+  state.flag.zero = state.register.a === 0;
+  state.flag.subtract = false;
+  state.flag.half = false;
+  state.flag.carry = false;
+  state.register.pc = (state.register.pc + 1) & 0xFFFF;
 };
 
 /* CP
 *******************************************/
-export const CP_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+const CP_factory = regName => state => {
+  const sum = state.register.a - state.register[regName];
+
+  state.flag.zero = sum === 0;
+  state.flag.subtract = true;
+  state.flag.half = (sum & 0xF) > (state.register.a & 0xF);
+  state.flag.carry = sum < 0;
 };
 
-export const CP_B = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const CP_A = CP_factory('a');
 
-export const CP_C = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const CP_B = CP_factory('b');
 
-export const CP_D = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const CP_C = CP_factory('c');
 
-export const CP_E = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const CP_D = CP_factory('d');
 
-export const CP_H = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const CP_E = CP_factory('e');
 
-export const CP_L = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+export const CP_H = CP_factory('h');
+
+export const CP_L = CP_factory('l');
 
 export const CP_HL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  const sum = state.register.a - state.mmu.read((state.register.h << 8) + state.register.l);
+
+  state.flag.zero = sum === 0;
+  state.flag.subtract = true;
+  state.flag.half = (sum & 0xF) > (state.register.a & 0xF);
+  state.flag.carry = sum < 0;
 };
 
 export const CP_d8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  const sum = state.register.a - state.mmu.read(state.register.pc + 1);
+
+  state.flag.zero = sum === 0;
+  state.flag.subtract = true;
+  state.flag.half = (sum & 0xF) > (state.register.a & 0xF);
+  state.flag.carry = sum < 0;
+  state.register.pc = (state.register.pc + 1) & 0xFFFF;
 };
 
 /* misc
