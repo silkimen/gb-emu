@@ -445,9 +445,30 @@ export const CP_d8 = state => {
 /* misc
 *******************************************/
 
-// decimal adjust accumulator
+// decimal adjust accumulator (BCD)
 export const DAA = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  if (state.flag.subtract) {
+    if (state.flag.carry && state.flag.half) {
+      state.register.a = (state.register.a + 0x9A) & 0xFF;
+      state.flag.half = false;
+    } else if (state.flag.carry) {
+      state.register.a = (state.register.a + 0xA0) & 0xFF;
+    } else if (state.flag.half) {
+      state.register.a = (state.register.a + 0xFA) & 0xFF;
+      state.flag.half = false;
+    }
+  } else {
+    if (state.flag.carry || state.register.a > 0x99) {
+      state.register.a = (state.register.a + 0x60) & 0xFF;
+      state.flag.carry = true;
+    }
+    if (state.flag.half || (state.register.a & 0xF) > 0x9) {
+      state.register.a = (state.register.a + 0x06) & 0xFF;
+      state.flag.half = false;
+    }
+  }
+
+  state.flag.zero = state.register.a === 0;
 };
 
 // complement value of A
