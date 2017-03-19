@@ -21,19 +21,19 @@ export const INC_SP = state => {
 /* DEC
 *******************************************/
 export const DEC_BC = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.bc -= 1;
 };
 
 export const DEC_DE = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.de -= 1;
 };
 
 export const DEC_HL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.hl -= 1;
 };
 
 export const DEC_SP = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.sp -= 1;
 };
 
 /* ADD
