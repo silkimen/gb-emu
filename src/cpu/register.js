@@ -1,4 +1,5 @@
-const BYTE_REGISTER_NAMES = [ 'a', 'b', 'c', 'd', 'e', 'f', 'h', 'l' ];
+const BYTE_REGISTER_NAMES = [ 'b', 'c', 'd', 'e', 'h', 'l', 'a', 'f' ];
+const BYTE_REGISTER_GROUPS = [ 'bc', 'de', 'hl' ];
 const WORD_REGISTER_NAMES = [ 'sp', 'pc' ];
 const FLAG_NAMES = [ 'zero', 'subtract', 'half', 'carry' ];
 const FLAG_MASKS = [ 0x80, 0x40, 0x20, 0x10 ];
@@ -9,6 +10,7 @@ export const Register = function () {
 
   const byteBuffer = new ArrayBuffer(BYTE_REGISTER_NAMES.length);
   const byteView = new Uint8Array(byteBuffer);
+  const groupView = new DataView(byteBuffer);
 
   const wordBuffer = new ArrayBuffer(WORD_REGISTER_NAMES.length * 2);
   const wordView = new Uint16Array(wordBuffer);
@@ -24,6 +26,16 @@ export const Register = function () {
       get: () => byteView[index],
       set: value => {
         byteView[index] = value;
+      }
+    });
+  });
+
+  BYTE_REGISTER_GROUPS.forEach((group, index) => {
+    Object.defineProperty(register, group, {
+      enumerable: true,
+      get: () => groupView.getUint16(index * 2, false),
+      set: value => {
+        groupView.setUint16(index * 2, value, false);
       }
     });
   });

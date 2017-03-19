@@ -3,24 +3,15 @@
 /* INC
 *******************************************/
 export const INC_BC = state => {
-  const val = (state.register.b << 8) + state.register.c + 1;
-
-  state.register.b = (val >> 8) & 0xFF;
-  state.register.c = val & 0xFF;
+  state.register.bc += 1;
 };
 
 export const INC_DE = state => {
-  const val = (state.register.d << 8) + state.register.e + 1;
-
-  state.register.d = (val >> 8) & 0xFF;
-  state.register.e = val & 0xFF;
+  state.register.de += 1;
 };
 
 export const INC_HL = state => {
-  const val = (state.register.h << 8) + state.register.l + 1;
-
-  state.register.h = (val >> 8) & 0xFF;
-  state.register.l = val & 0xFF;
+  state.register.hl += 1;
 };
 
 export const INC_SP = state => {
