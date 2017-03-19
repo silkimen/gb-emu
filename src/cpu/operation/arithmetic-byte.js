@@ -110,7 +110,7 @@ export const ADD_A_d8 = state => {
   state.flag.subtract = false;
   state.register.a = sum & 0xFF;
   state.flag.zero = state.register.a === 0;
-  state.register.pc = (state.register.pc + 1) & 0xFFFF;
+  state.register.pc += 1;
 };
 
 /* ADC
@@ -162,7 +162,7 @@ export const ADC_A_d8 = state => {
   state.flag.subtract = false;
   state.register.a = sum & 0xFF;
   state.flag.zero = state.register.a === 0;
-  state.register.pc = (state.register.pc + 1) & 0xFFFF;
+  state.register.pc += 1;
 };
 
 /* SUB
@@ -211,7 +211,7 @@ export const SUB_d8 = state => {
   state.flag.subtract = true;
   state.register.a = sum & 0xFF;
   state.flag.zero = state.register.a === 0;
-  state.register.pc = (state.register.pc + 1) & 0xFFFF;
+  state.register.pc += 1;
 };
 
 /* SBC
@@ -261,7 +261,7 @@ export const SBC_A_d8 = state => {
   state.flag.subtract = true;
   state.register.a = sum & 0xFF;
   state.flag.zero = state.register.a === 0;
-  state.register.pc = (state.register.pc + 1) & 0xFFFF;
+  state.register.pc += 1;
 };
 
 /* AND
@@ -305,7 +305,7 @@ export const AND_d8 = state => {
   state.flag.subtract = false;
   state.flag.half = true;
   state.flag.carry = false;
-  state.register.pc = (state.register.pc + 1) & 0xFFFF;
+  state.register.pc += 1;
 };
 
 /* XOR
@@ -349,7 +349,7 @@ export const XOR_d8 = state => {
   state.flag.subtract = false;
   state.flag.half = false;
   state.flag.carry = false;
-  state.register.pc = (state.register.pc + 1) & 0xFFFF;
+  state.register.pc += 1;
 };
 
 /* OR
@@ -393,7 +393,7 @@ export const OR_d8 = state => {
   state.flag.subtract = false;
   state.flag.half = false;
   state.flag.carry = false;
-  state.register.pc = (state.register.pc + 1) & 0xFFFF;
+  state.register.pc += 1;
 };
 
 /* CP
@@ -437,7 +437,7 @@ export const CP_d8 = state => {
   state.flag.subtract = true;
   state.flag.half = (sum & 0xF) > (state.register.a & 0xF);
   state.flag.carry = sum < 0;
-  state.register.pc = (state.register.pc + 1) & 0xFFFF;
+  state.register.pc += 1;
 };
 
 /* misc

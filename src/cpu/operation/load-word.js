@@ -5,7 +5,7 @@
 export const LD_BC_d16 = state => {
   state.register.c = state.mmu.read(state.register.pc + 1);
   state.register.b = state.mmu.read(state.register.pc + 2);
-  state.register.pc = (state.register.pc + 2) & 0xFFFF;
+  state.register.pc += 2;
 };
 
 export const LD_DE_d16 = state => {
