@@ -11,7 +11,7 @@ const DIST_FILES = `${DIST_FOLDER}/**/*.js`;
 const SPEC = [ 'spec/helper.js', 'spec/**/*.spec.js' ];
 
 gulp.task('lint', () => gulp
-  .src(SOURCE)
+  .src([].concat(SOURCE).concat(SPEC))
   .pipe(eslint())
   .pipe(eslint.format())
   .pipe(eslint.failAfterError()));
