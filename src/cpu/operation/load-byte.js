@@ -343,11 +343,11 @@ export const LD_HLm_A = state => {
 /* misc
 *******************************************/
 export const LD_BC_A = state => {
-  state.mmu.write((state.register.b << 8) + state.register.c, state.register.a);
+  state.mmu.write(state.register.bc, state.register.a);
 };
 
 export const LD_DE_A = state => {
-  state.mmu.write((state.register.d << 8) + state.register.e, state.register.a);
+  state.mmu.write(state.register.de, state.register.a);
 };
 
 export const LD_$a8_A = state => {

@@ -24,10 +24,9 @@ export const INC_H = INC_factory('h');
 export const INC_L = INC_factory('l');
 
 export const INC_$HL = state => {
-  const address = (state.register.h << 8) + state.register.l;
-  const value = (state.mmu.read(address) + 1) & 0xFF;
+  const value = (state.mmu.read(state.register.hl) + 1) & 0xFF;
 
-  state.mmu.write(address, value);
+  state.mmu.write(state.register.hl, value);
   state.flag.zero = value === 0;
   state.flag.subtract = false;
   state.flag.half = (value & 0xF) === 0;
@@ -57,10 +56,9 @@ export const DEC_H = DEC_factory('h');
 export const DEC_L = DEC_factory('l');
 
 export const DEC_$HL = state => {
-  const address = (state.register.h << 8) + state.register.l;
-  const value = (state.mmu.read(address) - 1) & 0xFF;
+  const value = (state.mmu.read(state.register.hl) - 1) & 0xFF;
 
-  state.mmu.write(address, value);
+  state.mmu.write(state.register.hl, value);
   state.flag.zero = value === 0;
   state.flag.subtract = true;
   state.flag.half = (value & 0xF) === 0xF;
@@ -93,7 +91,7 @@ export const ADD_A_H = ADD_factory('h');
 export const ADD_A_L = ADD_factory('l');
 
 export const ADD_A_HL = state => {
-  const input = state.mmu.read((state.register.h << 8) + state.register.l);
+  const input = state.mmu.read(state.register.hl);
   const sum = state.register.a + input;
 
   state.flag.carry = sum > 0xFF;
@@ -143,7 +141,7 @@ export const ADC_A_H = ADC_factory('h');
 export const ADC_A_L = ADC_factory('l');
 
 export const ADC_A_HL = state => {
-  const input = state.mmu.read((state.register.h << 8) + state.register.l);
+  const input = state.mmu.read(state.register.hl);
   const sum = state.register.a + input + (state.flag.carry ? 1 : 0);
   const halfsum = (state.register.a & 0xF) + input + (state.flag.carry ? 1 : 0);
 
@@ -194,7 +192,7 @@ export const SUB_H = SUB_factory('h');
 export const SUB_L = SUB_factory('l');
 
 export const SUB_HL = state => {
-  const input = state.mmu.read((state.register.h << 8) + state.register.l);
+  const input = state.mmu.read(state.register.hl);
   const sum = state.register.a - input;
 
   state.flag.carry = sum < 0;
@@ -244,7 +242,7 @@ export const SBC_A_H = SBC_factory('h');
 export const SBC_A_L = SBC_factory('l');
 
 export const SBC_A_HL = state => {
-  const input = state.mmu.read((state.register.h << 8) + state.register.l);
+  const input = state.mmu.read(state.register.hl);
   const sum = state.register.a - input - (state.flag.carry ? 1 : 0);
 
   state.flag.carry = sum < 0;
@@ -292,7 +290,7 @@ export const AND_H = AND_factory('h');
 export const AND_L = AND_factory('l');
 
 export const AND_HL = state => {
-  state.register.a &= state.mmu.read((state.register.h << 8) + state.register.l);
+  state.register.a &= state.mmu.read(state.register.hl);
 
   state.flag.zero = state.register.a === 0;
   state.flag.subtract = false;
@@ -336,7 +334,7 @@ export const XOR_H = XOR_factory('h');
 export const XOR_L = XOR_factory('l');
 
 export const XOR_HL = state => {
-  state.register.a ^= state.mmu.read((state.register.h << 8) + state.register.l);
+  state.register.a ^= state.mmu.read(state.register.hl);
 
   state.flag.zero = state.register.a === 0;
   state.flag.subtract = false;
@@ -380,7 +378,7 @@ export const OR_H = OR_factory('h');
 export const OR_L = OR_factory('l');
 
 export const OR_HL = state => {
-  state.register.a |= state.mmu.read((state.register.h << 8) + state.register.l);
+  state.register.a |= state.mmu.read(state.register.hl);
 
   state.flag.zero = state.register.a === 0;
   state.flag.subtract = false;
@@ -424,7 +422,7 @@ export const CP_H = CP_factory('h');
 export const CP_L = CP_factory('l');
 
 export const CP_HL = state => {
-  const sum = state.register.a - state.mmu.read((state.register.h << 8) + state.register.l);
+  const sum = state.register.a - state.mmu.read(state.register.hl);
 
   state.flag.zero = sum === 0;
   state.flag.subtract = true;
