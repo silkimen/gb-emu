@@ -1,10 +1,6 @@
-language: nodejs
+language: node_js
 node_js:
 - stable
 - '7.0'
-- '6.0'
-- '5.0'
-- '4.4'
-- '4.0'
 before_script:
 - npm run lint
