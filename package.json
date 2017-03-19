@@ -5,7 +5,8 @@
   "main": "target/dist/gb-emu.js",
   "scripts": {
     "test": "gulp test",
-    "prepublish": "gulp build"
+    "prepublish": "gulp build",
+    "lint": "gulp lint"
   },
   "author": "Sefa Ilkimen",
   "license": "MIT",
