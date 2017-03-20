@@ -1,4 +1,4 @@
-import cbMap from './cb-map';
+import cbMap from '../cb-map';
 
 export const PREFIX_CB = state => {
   cbMap[state.mmu.read(++state.register.pc)].call(null, state);
