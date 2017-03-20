@@ -1,5 +1,6 @@
 const babel = require('gulp-babel');
 const cio = require('./helper/count-implemented-ops');
+const coveralls = require('gulp-coveralls');
 const del = require('del');
 const eslint = require('gulp-eslint');
 const gulp = require('gulp');
@@ -33,6 +34,10 @@ gulp.task('test', [ 'transpile', 'pre-test' ], () => gulp
   .src(SPEC)
   .pipe(jasmine())
   .pipe(istanbul.writeReports()));
+
+gulp.task('coveralls', () => gulp
+  .src('test/coverage/**/lcov.info')
+  .pipe(coveralls()));
 
 gulp.task('show-implemented-ops', [ 'transpile' ], () => {
   const result = cio(require(`./${DIST_FOLDER}/cpu/operation/operation`).default);
