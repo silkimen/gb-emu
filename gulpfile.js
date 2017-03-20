@@ -36,7 +36,7 @@ gulp.task('test', [ 'transpile', 'pre-test' ], () => gulp
   .pipe(istanbul.writeReports()));
 
 gulp.task('coveralls', () => gulp
-  .src('test/coverage/**/lcov.info')
+  .src('./coverage/**/lcov.info')
   .pipe(coveralls()));
 
 gulp.task('show-implemented-ops', [ 'transpile' ], () => {
