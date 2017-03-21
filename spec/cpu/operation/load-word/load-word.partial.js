@@ -1,6 +1,6 @@
 const op = require(`${__base}cpu/operation/operation`).default;
 const MmuMock = require('../mmu.mock');
-const Register = require(`${__base}cpu/register`).Register;
+const Register = require(`${__base}cpu/register`).default;
 
 let state = null;
 

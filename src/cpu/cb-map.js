@@ -1,6 +1,6 @@
 /* eslint-disable lines-around-comment */
 
-import * as ops from './operation/operation';
+import ops from './operation/operation';
 
 export default [
   // 0x00

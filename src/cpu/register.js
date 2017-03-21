@@ -4,7 +4,7 @@ const WORD_REGISTER_NAMES = [ 'sp', 'pc' ];
 const FLAG_NAMES = [ 'zero', 'subtract', 'half', 'carry' ];
 const FLAG_MASKS = [ 0x80, 0x40, 0x20, 0x10 ];
 
-export const Register = function () {
+export default function () {
   const register = {};
   const flag = {};
 
@@ -60,4 +60,4 @@ export const Register = function () {
 
   this.register = register;
   this.flag = flag;
-};
+}

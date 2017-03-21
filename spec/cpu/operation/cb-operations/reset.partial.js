@@ -1,6 +1,6 @@
 const op = require(`${__base}cpu/operation/operation`).default;
 const MmuMock = require('../mmu.mock');
-const Register = require(`${__base}cpu/register`).Register;
+const Register = require(`${__base}cpu/register`).default;
 
 const REG_NAMES = [ 'a', 'b', 'c', 'd', 'e', 'h', 'l' ];
 const expectedValues = [ 0xFE, 0xFD, 0xFB, 0xF7, 0xEF, 0xDF, 0xBF, 0x7F ];

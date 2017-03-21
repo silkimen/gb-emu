@@ -1,6 +1,6 @@
 const op = require(`${__base}cpu/operation/operation`).default;
 const MmuMock = require('../mmu.mock');
-const Register = require(`${__base}cpu/register`).Register;
+const Register = require(`${__base}cpu/register`).default;
 
 const REG_NAMES_2_BE_TESTED = [ 'a', 'b', 'c', 'd', 'e', 'h', 'l' ];
 

@@ -1,3 +1,7 @@
+export const PREFIX_CB = () => {
+  // not called actually
+};
+
 export const NOOP = () => {
   // it's a no-op
 };

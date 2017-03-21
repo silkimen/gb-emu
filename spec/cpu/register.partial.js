@@ -1,4 +1,4 @@
-const Register = require(`${__base}cpu/register`).Register;
+const Register = require(`${__base}cpu/register`).default;
 
 const BYTE_REG_NAMES = [ 'a', 'b', 'c', 'd', 'e', 'f', 'h', 'l' ];
 const WORD_REG_NAMES = [ 'bc', 'de', 'hl', 'sp', 'pc' ];
