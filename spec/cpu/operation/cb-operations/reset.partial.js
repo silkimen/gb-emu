@@ -34,7 +34,7 @@ describe('bit reset operation', () => {
       state.register.hl = 100;
       state.mmu.write(100, 0xFF);
 
-      op[`RES_${bit}_HL`].call(null, state);
+      op[`RES_${bit}_$HL$`].call(null, state);
       expect(state.mmu.read(100)).toBe(expectedValues[bit]);
     });
   }

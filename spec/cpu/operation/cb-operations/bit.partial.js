@@ -41,7 +41,7 @@ describe('bit access operation', () => {
   for (let bit = 0; bit < 8; ++bit) {
     // eslint-disable-next-line no-loop-func
     it(`sets zero flag when bit ${bit} of value (HL) is zero`, () => {
-      op[`BIT_${bit}_HL`].call(null, state);
+      op[`BIT_${bit}_$HL$`].call(null, state);
       expect(state.flag.zero).toBe(true);
       expect(state.flag.subtract).toBe(false);
       expect(state.flag.half).toBe(true);
@@ -52,7 +52,7 @@ describe('bit access operation', () => {
       state.register.hl = 100;
       state.mmu.write(100, 0xFF);
 
-      op[`BIT_${bit}_HL`].call(null, state);
+      op[`BIT_${bit}_$HL$`].call(null, state);
       expect(state.flag.zero).toBe(false);
       expect(state.flag.subtract).toBe(false);
       expect(state.flag.half).toBe(true);

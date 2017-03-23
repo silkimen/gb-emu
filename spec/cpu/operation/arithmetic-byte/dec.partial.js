@@ -36,19 +36,19 @@ describe('8 bit decrement operation', () => {
     });
   });
 
-  it(`decrements value HL`, () => {
+  it(`decrements value (HL)`, () => {
     state.mmu.write(0xAABB, 1);
     state.register.h = 0xAA;
     state.register.l = 0xBB;
 
-    op.DEC_$HL.call(null, state);
+    op.DEC_$HL$.call(null, state);
 
     expect(state.mmu.read(0xAABB)).toBe(0);
     expect(state.flag.zero).toBe(true);
     expect(state.flag.subtract).toBe(true);
     expect(state.flag.half).toBe(false);
 
-    op.DEC_$HL.call(null, state);
+    op.DEC_$HL$.call(null, state);
 
     expect(state.mmu.read(0xAABB)).toBe(255);
     expect(state.flag.zero).toBe(false);

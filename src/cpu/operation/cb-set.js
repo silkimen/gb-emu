@@ -7,7 +7,7 @@ const SET_factory = (mask, name) => state => {
   state.register[name] |= mask;
 };
 
-const SET_HL_factory = mask => state => {
+const SET_i_$HL$_factory = mask => state => {
   const value = state.mmu.read(state.register.hl) | mask;
 
   state.mmu.write(state.register.hl, value);
@@ -22,7 +22,7 @@ registers.forEach(register => {
 });
 
 for (let i = 0; i < 8; ++i) {
-  operations[`SET_${i}_HL`] = SET_HL_factory(masks[i]);
+  operations[`SET_${i}_$HL$`] = SET_i_$HL$_factory(masks[i]);
 }
 
 export default operations;

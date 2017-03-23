@@ -60,7 +60,7 @@ describe('8 bit bitwise AND operation', () => {
     state.mmu.write(0, 0);
     state.register.a = 0;
 
-    op[`AND_HL`].call(null, state);
+    op.AND_$HL$.call(null, state);
     expect(state.register.a).toBe(0);
     expect(state.flag.zero).toBe(true);
     expect(state.flag.subtract).toBe(false);
@@ -70,7 +70,7 @@ describe('8 bit bitwise AND operation', () => {
     state.mmu.write(0, 255);
     state.register.a = 255;
 
-    op[`AND_HL`].call(null, state);
+    op.AND_$HL$.call(null, state);
     expect(state.register.a).toBe(255);
     expect(state.flag.zero).toBe(false);
     expect(state.flag.subtract).toBe(false);
@@ -80,7 +80,7 @@ describe('8 bit bitwise AND operation', () => {
     state.mmu.write(0, 0b10101100);
     state.register.a = 0b10011011;
 
-    op[`AND_HL`].call(null, state);
+    op.AND_$HL$.call(null, state);
     expect(state.register.a).toBe(0b10001000);
     expect(state.flag.zero).toBe(false);
     expect(state.flag.subtract).toBe(false);
@@ -94,7 +94,7 @@ describe('8 bit bitwise AND operation', () => {
     state.mmu.write(1, 0);
     state.register.a = 0;
 
-    op[`AND_d8`].call(null, state);
+    op.AND_d8.call(null, state);
     expect(state.register.a).toBe(0);
     expect(state.flag.zero).toBe(true);
     expect(state.flag.subtract).toBe(false);
@@ -105,7 +105,7 @@ describe('8 bit bitwise AND operation', () => {
     state.mmu.write(2, 255);
     state.register.a = 255;
 
-    op[`AND_d8`].call(null, state);
+    op.AND_d8.call(null, state);
     expect(state.register.a).toBe(255);
     expect(state.flag.zero).toBe(false);
     expect(state.flag.subtract).toBe(false);
@@ -116,7 +116,7 @@ describe('8 bit bitwise AND operation', () => {
     state.mmu.write(3, 0b10101100);
     state.register.a = 0b10011011;
 
-    op[`AND_d8`].call(null, state);
+    op.AND_d8.call(null, state);
     expect(state.register.a).toBe(0b10001000);
     expect(state.flag.zero).toBe(false);
     expect(state.flag.subtract).toBe(false);

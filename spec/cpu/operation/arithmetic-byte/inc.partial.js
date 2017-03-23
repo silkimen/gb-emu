@@ -37,12 +37,12 @@ describe('8 bit increment operation', () => {
     });
   });
 
-  it(`increments value HL`, () => {
+  it(`increments value (HL)`, () => {
     state.mmu.write(0xAABB, 50);
     state.register.h = 0xAA;
     state.register.l = 0xBB;
 
-    op.INC_$HL.call(null, state);
+    op.INC_$HL$.call(null, state);
 
     expect(state.mmu.read(0xAABB)).toBe(51);
     expect(state.flag.zero).toBe(false);
@@ -53,7 +53,7 @@ describe('8 bit increment operation', () => {
     state.register.h = 0xAA;
     state.register.l = 0xBB;
 
-    op.INC_$HL.call(null, state);
+    op.INC_$HL$.call(null, state);
 
     expect(state.mmu.read(0xAABB)).toBe(0);
     expect(state.flag.zero).toBe(true);

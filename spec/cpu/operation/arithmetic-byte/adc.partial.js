@@ -124,7 +124,7 @@ describe('8 bit add with carry operation', () => {
 
     state.flag.carry = true;
     state.register.a = 0;
-    op.ADC_A_HL.call(null, state);
+    op.ADC_A_$HL$.call(null, state);
     expect(state.register.a).toBe(2);
     expect(state.flag.zero).toBe(false);
     expect(state.flag.subtract).toBe(false);
@@ -133,7 +133,7 @@ describe('8 bit add with carry operation', () => {
 
     state.flag.carry = false;
     state.register.a = 0;
-    op.ADC_A_HL.call(null, state);
+    op.ADC_A_$HL$.call(null, state);
     expect(state.register.a).toBe(1);
     expect(state.flag.zero).toBe(false);
     expect(state.flag.subtract).toBe(false);
@@ -142,7 +142,7 @@ describe('8 bit add with carry operation', () => {
 
     state.flag.carry = true;
     state.register.a = 0x0E;
-    op.ADC_A_HL.call(null, state);
+    op.ADC_A_$HL$.call(null, state);
     expect(state.register.a).toBe(0x10);
     expect(state.flag.zero).toBe(false);
     expect(state.flag.subtract).toBe(false);
@@ -151,7 +151,7 @@ describe('8 bit add with carry operation', () => {
 
     state.flag.carry = false;
     state.register.a = 0x0F;
-    op.ADC_A_HL.call(null, state);
+    op.ADC_A_$HL$.call(null, state);
     expect(state.register.a).toBe(0x10);
     expect(state.flag.zero).toBe(false);
     expect(state.flag.subtract).toBe(false);
@@ -160,7 +160,7 @@ describe('8 bit add with carry operation', () => {
 
     state.flag.carry = true;
     state.register.a = 0xFF;
-    op.ADC_A_HL.call(null, state);
+    op.ADC_A_$HL$.call(null, state);
     expect(state.register.a).toBe(1);
     expect(state.flag.zero).toBe(false);
     expect(state.flag.subtract).toBe(false);
@@ -169,7 +169,7 @@ describe('8 bit add with carry operation', () => {
 
     state.flag.carry = false;
     state.register.a = 0xFF;
-    op.ADC_A_HL.call(null, state);
+    op.ADC_A_$HL$.call(null, state);
     expect(state.register.a).toBe(0);
     expect(state.flag.zero).toBe(true);
     expect(state.flag.subtract).toBe(false);

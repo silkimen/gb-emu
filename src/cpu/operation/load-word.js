@@ -28,7 +28,7 @@ export const LD_SP_d16 = state => {
   state.register.pc += 2;
 };
 
-export const LD_HL_SPpr8 = state => {
+export const LDHL_SP_r8 = state => {
   const signedVal = (state.mmu.read(state.register.pc + 1) << 24) >> 24;
   const sum = (state.register.sp + signedVal) & 0xFFFF;
   const carryCheck = state.register.sp ^ signedVal ^ sum;

@@ -70,7 +70,7 @@ describe('8 bit compare operation', () => {
     state.mmu.write(0, 0);
     state.register.a = 0;
 
-    op[`CP_HL`].call(null, state);
+    op.CP_$HL$.call(null, state);
     expect(state.register.a).toBe(0);
     expect(state.flag.zero).toBe(true);
     expect(state.flag.subtract).toBe(true);
@@ -80,7 +80,7 @@ describe('8 bit compare operation', () => {
     state.mmu.write(0, 255);
     state.register.a = 255;
 
-    op[`CP_HL`].call(null, state);
+    op.CP_$HL$.call(null, state);
     expect(state.register.a).toBe(255);
     expect(state.flag.zero).toBe(true);
     expect(state.flag.subtract).toBe(true);
@@ -90,7 +90,7 @@ describe('8 bit compare operation', () => {
     state.mmu.write(0, 1);
     state.register.a = 16;
 
-    op[`CP_HL`].call(null, state);
+    op.CP_$HL$.call(null, state);
     expect(state.register.a).toBe(16);
     expect(state.flag.zero).toBe(false);
     expect(state.flag.subtract).toBe(true);
@@ -100,7 +100,7 @@ describe('8 bit compare operation', () => {
     state.mmu.write(0, 2);
     state.register.a = 1;
 
-    op[`CP_HL`].call(null, state);
+    op.CP_$HL$.call(null, state);
     expect(state.register.a).toBe(1);
     expect(state.flag.zero).toBe(false);
     expect(state.flag.subtract).toBe(true);
@@ -114,7 +114,7 @@ describe('8 bit compare operation', () => {
     state.mmu.write(1, 0);
     state.register.a = 0;
 
-    op[`CP_d8`].call(null, state);
+    op.CP_d8.call(null, state);
     expect(state.register.a).toBe(0);
     expect(state.flag.zero).toBe(true);
     expect(state.flag.subtract).toBe(true);
@@ -125,7 +125,7 @@ describe('8 bit compare operation', () => {
     state.mmu.write(2, 255);
     state.register.a = 255;
 
-    op[`CP_d8`].call(null, state);
+    op.CP_d8.call(null, state);
     expect(state.register.a).toBe(255);
     expect(state.flag.zero).toBe(true);
     expect(state.flag.subtract).toBe(true);
@@ -136,7 +136,7 @@ describe('8 bit compare operation', () => {
     state.mmu.write(3, 1);
     state.register.a = 16;
 
-    op[`CP_d8`].call(null, state);
+    op.CP_d8.call(null, state);
     expect(state.register.a).toBe(16);
     expect(state.flag.zero).toBe(false);
     expect(state.flag.subtract).toBe(true);
@@ -147,7 +147,7 @@ describe('8 bit compare operation', () => {
     state.mmu.write(4, 2);
     state.register.a = 1;
 
-    op[`CP_d8`].call(null, state);
+    op.CP_d8.call(null, state);
     expect(state.register.a).toBe(1);
     expect(state.flag.zero).toBe(false);
     expect(state.flag.subtract).toBe(true);

@@ -9,7 +9,7 @@ const BIT_factory = (mask, register) => state => {
   state.flag.zero = (state.register[register] & mask) === 0;
 };
 
-const BIT_HL_factory = mask => state => {
+const BIT_i_$HL$_factory = mask => state => {
   state.flag.half = true;
   state.flag.subtract = false;
   state.flag.zero = (state.mmu.read(state.register.hl) & mask) === 0;
@@ -24,7 +24,7 @@ registers.forEach(register => {
 });
 
 for (let i = 0; i < 8; ++i) {
-  operations[`BIT_${i}_HL`] = BIT_HL_factory(masks[i]);
+  operations[`BIT_${i}_$HL$`] = BIT_i_$HL$_factory(masks[i]);
 }
 
 export default operations;

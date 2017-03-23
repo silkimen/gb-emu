@@ -28,7 +28,7 @@ export const SLA_L = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };
 
-export const SLA_HL = state => {
+export const SLA_$HL$ = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };
 
@@ -62,7 +62,7 @@ export const SRA_L = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };
 
-export const SRA_HL = state => {
+export const SRA_$HL$ = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };
 
@@ -96,6 +96,6 @@ export const SRL_L = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };
 
-export const SRL_HL = state => {
+export const SRL_$HL$ = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };

@@ -65,7 +65,7 @@ describe('8 bit subtract operation', () => {
     state.mmu.write('0', '1');
 
     state.register.a = 1;
-    op.SUB_HL.call(null, state);
+    op.SUB_$HL$.call(null, state);
     expect(state.register.a).toBe(0);
     expect(state.flag.zero).toBe(true);
     expect(state.flag.subtract).toBe(true);
@@ -73,7 +73,7 @@ describe('8 bit subtract operation', () => {
     expect(state.flag.carry).toBe(false);
 
     state.register.a = 0x10;
-    op.SUB_HL.call(null, state);
+    op.SUB_$HL$.call(null, state);
     expect(state.register.a).toBe(0x0F);
     expect(state.flag.zero).toBe(false);
     expect(state.flag.subtract).toBe(true);
@@ -81,7 +81,7 @@ describe('8 bit subtract operation', () => {
     expect(state.flag.carry).toBe(false);
 
     state.register.a = 0;
-    op.SUB_HL.call(null, state);
+    op.SUB_$HL$.call(null, state);
     expect(state.register.a).toBe(0xFF);
     expect(state.flag.zero).toBe(false);
     expect(state.flag.subtract).toBe(true);

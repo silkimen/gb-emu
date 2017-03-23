@@ -1,359 +1,111 @@
 /* eslint-disable camelcase */
 
-/* LD_A
-*******************************************/
-export const LD_A_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_A_B = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_A_C = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_A_D = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_A_E = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_A_H = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_A_L = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_A_HL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_A_HLp = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_A_HLm = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_A_BC = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_A_DE = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_A_d8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_A_$a8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_A_a16 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_A_$C = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-/* LD_B
-*******************************************/
-export const LD_B_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_B_B = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_B_C = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_B_D = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_B_E = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_B_H = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_B_L = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_B_HL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_B_d8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-/* LD_C
-*******************************************/
-export const LD_C_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_C_B = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_C_C = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_C_D = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_C_E = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_C_H = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_C_L = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_C_HL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_C_d8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_$C_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-/* LD_D
-*******************************************/
-export const LD_D_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_D_B = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_D_C = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_D_D = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_D_E = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_D_H = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_D_L = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_D_HL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_D_d8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-/* LD_E
-*******************************************/
-export const LD_E_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_E_B = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_E_C = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+const registers = [ 'a', 'b', 'c', 'd', 'e', 'h', 'l' ];
+const operations = {};
 
-export const LD_E_D = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+const LD_factory = (target, source) => state => {
+  state.register[target] = state.register[source];
 };
 
-export const LD_E_E = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+const LD_$HL$_x_factory = source => state => {
+  state.mmu.write(state.register.hl, state.register[source]);
 };
 
-export const LD_E_H = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+const LD_x_$HL$_factory = target => state => {
+  state.register[target] = state.mmu.read(state.register.hl);
 };
 
-export const LD_E_L = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+const LD_x_d8_factory = target => state => {
+  state.register[target] = state.mmu.read(++state.register.pc);
 };
 
-export const LD_E_HL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_E_d8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-/* LD_H
-*******************************************/
-export const LD_H_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_H_B = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_H_C = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_H_D = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_H_E = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_H_H = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+registers.forEach(source => {
+  registers.forEach(target => {
+    const sourceName = source.toUpperCase();
+    const targetName = target.toUpperCase();
 
-export const LD_H_L = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_H_HL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_H_d8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-/* LD_L
-*******************************************/
-export const LD_L_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_L_B = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
-
-export const LD_L_C = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+    operations[`LD_${targetName}_${sourceName}`] = LD_factory(target, source);
+  });
+});
 
-export const LD_L_D = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+registers.forEach(register => {
+  const registerName = register.toUpperCase();
 
-export const LD_L_E = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+  operations[`LD_$HL$_${registerName}`] = LD_$HL$_x_factory(register);
+  operations[`LD_${registerName}_d8`] = LD_x_d8_factory(register);
+  operations[`LD_${registerName}_$HL$`] = LD_x_$HL$_factory(register);
+});
 
-export const LD_L_H = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+operations.LD_$HL$_d8 = state => {
+  const value = state.mmu.read(++state.register.pc);
 
-export const LD_L_L = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.mmu.write(state.register.hl, value);
 };
 
-export const LD_L_HL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+operations.LD_A_$HLI$ = state => {
+  state.register.a = state.mmu.read(state.register.hl++);
 };
 
-export const LD_L_d8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+operations.LD_A_$HLD$ = state => {
+  state.register.a = state.mmu.read(state.register.hl--);
 };
 
-/* LD_HL
-*******************************************/
-export const LD_HL_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+operations.LD_A_$BC$ = state => {
+  state.register.a = state.mmu.read(state.register.bc);
 };
 
-export const LD_HL_B = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+operations.LD_A_$DE$ = state => {
+  state.register.a = state.mmu.read(state.register.de);
 };
 
-export const LD_HL_C = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+operations.LDH_A_a8 = state => {
+  const address = state.mmu.read(++state.register.pc) + 0xFF00;
 
-export const LD_HL_D = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.a = state.mmu.read(address);
 };
 
-export const LD_HL_E = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
-};
+operations.LD_A_a16 = state => {
+  const address = state.mmu.read(++state.register.pc) +
+    (state.mmu.read(++state.register.pc) << 8);
 
-export const LD_HL_H = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.a = state.mmu.read(address);
 };
 
-export const LD_HL_L = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+operations.LD_A_$C$ = state => {
+  state.register.a = state.mmu.read(state.register.c + 0xFF00);
 };
 
-export const LD_HL_d8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+operations.LD_$C$_A = state => {
+  state.mmu.write(state.register.c + 0xFF00, state.register.a);
 };
 
-export const LD_HLp_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+operations.LD_$HLI$_A = state => {
+  state.mmu.write(state.register.hl++, state.register.a);
 };
 
-export const LD_HLm_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+operations.LD_$HLD$_A = state => {
+  state.mmu.write(state.register.hl--, state.register.a);
 };
 
-/* misc
-*******************************************/
-export const LD_BC_A = state => {
+operations.LD_$BC$_A = state => {
   state.mmu.write(state.register.bc, state.register.a);
 };
 
-export const LD_DE_A = state => {
+operations.LD_$DE$_A = state => {
   state.mmu.write(state.register.de, state.register.a);
 };
 
-export const LD_$a8_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+operations.LDH_a8_A = state => {
+  const address = state.mmu.read(++state.register.pc) + 0xFF00;
+
+  state.mmu.write(address, state.register.a);
 };
 
-export const LD_a16_A = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+operations.LD_a16_A = state => {
+  const address = state.mmu.read(++state.register.pc) +
+    (state.mmu.read(++state.register.pc) << 8);
+
+  state.mmu.write(address, state.register.a);
 };
+
+export default operations;

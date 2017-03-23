@@ -28,7 +28,7 @@ export const RLC_L = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };
 
-export const RLC_HL = state => {
+export const RLC_$HL$ = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };
 
@@ -62,7 +62,7 @@ export const RRC_L = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };
 
-export const RRC_HL = state => {
+export const RRC_$HL$ = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };
 
@@ -96,7 +96,7 @@ export const RL_L = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };
 
-export const RL_HL = state => {
+export const RL_$HL$ = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };
 
@@ -130,7 +130,7 @@ export const RR_L = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };
 
-export const RR_HL = state => {
+export const RR_$HL$ = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };
 
@@ -164,6 +164,6 @@ export const SWAP_L = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };
 
-export const SWAP_HL = state => {
+export const SWAP_$HL$ = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };

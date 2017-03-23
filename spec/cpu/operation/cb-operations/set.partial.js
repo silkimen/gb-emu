@@ -31,7 +31,7 @@ describe('bit set operation', () => {
     // eslint-disable-next-line no-loop-func
     it(`sets bit ${bit} in value of (HL)`, () => {
       state.register.hl = 100;
-      op[`SET_${bit}_HL`].call(null, state);
+      op[`SET_${bit}_$HL$`].call(null, state);
       expect(state.mmu.read(100)).toBe(expectedValues[bit]);
     });
   }

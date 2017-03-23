@@ -70,7 +70,7 @@ export const JP_C_a16 = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };
 
-export const JP_HL = state => {
+export const JP_$HL$ = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };
 
