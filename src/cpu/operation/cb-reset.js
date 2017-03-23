@@ -17,7 +17,7 @@ const operations = {};
 
 registers.forEach(register => {
   for (let i = 0; i < 8; ++i) {
-    operations[`RES_${i}_${register}`] = RES_factory(masks[i], register);
+    operations[`RES_${i}_${register.toUpperCase()}`] = RES_factory(masks[i], register);
   }
 });
 

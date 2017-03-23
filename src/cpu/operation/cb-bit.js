@@ -19,7 +19,7 @@ const operations = {};
 
 registers.forEach(register => {
   for (let i = 0; i < 8; ++i) {
-    operations[`BIT_${i}_${register}`] = BIT_factory(masks[i], register);
+    operations[`BIT_${i}_${register.toUpperCase()}`] = BIT_factory(masks[i], register);
   }
 });
 

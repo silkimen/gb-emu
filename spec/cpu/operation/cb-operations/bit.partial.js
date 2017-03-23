@@ -20,7 +20,7 @@ describe('bit access operation', () => {
 
       // eslint-disable-next-line no-loop-func
       it(`sets zero flag when bit ${bit} in register ${upperName} is zero`, () => {
-        op[`BIT_${bit}_${register}`].call(null, state);
+        op[`BIT_${bit}_${upperName}`].call(null, state);
         expect(state.flag.zero).toBe(true);
         expect(state.flag.subtract).toBe(false);
         expect(state.flag.half).toBe(true);
@@ -30,7 +30,7 @@ describe('bit access operation', () => {
       it(`clears zero flag when bit ${bit} in register ${upperName} is not zero`, () => {
         state.register[register] = 0xFF;
 
-        op[`BIT_${bit}_${register}`].call(null, state);
+        op[`BIT_${bit}_${upperName}`].call(null, state);
         expect(state.flag.zero).toBe(false);
         expect(state.flag.subtract).toBe(false);
         expect(state.flag.half).toBe(true);

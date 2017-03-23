@@ -21,7 +21,7 @@ describe('bit set operation', () => {
 
       // eslint-disable-next-line no-loop-func
       it(`sets bit ${bit} in register ${upperName}`, () => {
-        op[`SET_${bit}_${register}`].call(null, state);
+        op[`SET_${bit}_${upperName}`].call(null, state);
         expect(state.register[register]).toBe(expectedValues[bit]);
       });
     }

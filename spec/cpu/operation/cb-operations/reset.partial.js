@@ -22,7 +22,7 @@ describe('bit reset operation', () => {
       // eslint-disable-next-line no-loop-func
       it(`clears bit ${bit} in register ${upperName}`, () => {
         state.register[register] = 0xFF;
-        op[`RES_${bit}_${register}`].call(null, state);
+        op[`RES_${bit}_${upperName}`].call(null, state);
         expect(state.register[register]).toBe(expectedValues[bit]);
       });
     }
