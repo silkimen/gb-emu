@@ -2,6 +2,10 @@ export const PREFIX_CB = () => {
   // not called actually
 };
 
+export const INVALID = () => {
+  // something really went wrong
+};
+
 export const NOOP = () => {
   // it's a no-op
 };

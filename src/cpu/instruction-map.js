@@ -44,7 +44,7 @@ export default [
   // 0x44
   ops.LD_B_H, ops.LD_B_L, ops.LD_B_$HL$, ops.LD_B_A,
   // 0x48
-  ops.LD_C_B, ops.C_C, ops.LD_C_D, ops.LD_C_E,
+  ops.LD_C_B, ops.LD_C_C, ops.LD_C_D, ops.LD_C_E,
   // 0x4C
   ops.LD_C_H, ops.LD_C_L, ops.LD_C_$HL$, ops.LD_C_A,
 
@@ -127,7 +127,7 @@ export default [
   // 0xD8
   ops.RET_C, ops.RETI, ops.JP_C_a16, ops.INVALID,
   // 0xDC
-  ops.CALL_C_a16, ops.INVALID, ops.SBC_A_d8, ops.RST18h,
+  ops.CALL_C_a16, ops.INVALID, ops.SBC_A_d8, ops.RST_18h,
 
   // 0xE0
   ops.LDH_a8_A, ops.POP_HL, ops.LD_$C$_A, ops.INVALID,
