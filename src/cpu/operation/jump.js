@@ -110,23 +110,70 @@ export const JP_$HL$ = state => {
 /* CALL
 *******************************************/
 export const CALL_a16 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  const address = state.mmu.read(++state.register.pc) + (state.mmu.read(++state.register.pc) << 8);
+  const returnAddress = state.register.pc + 1;
+
+  state.register.sp -= 1;
+  state.mmu.write(state.register.sp, returnAddress >> 8);
+  state.register.sp -= 1;
+  state.mmu.write(state.register.sp, returnAddress & 0xFF);
+  state.register.pc = address;
 };
 
 export const CALL_NZ_a16 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  const address = state.mmu.read(++state.register.pc) + (state.mmu.read(++state.register.pc) << 8);
+
+  if (!state.flag.zero) {
+    const returnAddress = state.register.pc + 1;
+
+    state.register.sp -= 1;
+    state.mmu.write(state.register.sp, returnAddress >> 8);
+    state.register.sp -= 1;
+    state.mmu.write(state.register.sp, returnAddress & 0xFF);
+    state.register.pc = address;
+  }
 };
 
 export const CALL_Z_a16 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  const address = state.mmu.read(++state.register.pc) + (state.mmu.read(++state.register.pc) << 8);
+
+  if (state.flag.zero) {
+    const returnAddress = state.register.pc + 1;
+
+    state.register.sp -= 1;
+    state.mmu.write(state.register.sp, returnAddress >> 8);
+    state.register.sp -= 1;
+    state.mmu.write(state.register.sp, returnAddress & 0xFF);
+    state.register.pc = address;
+  }
 };
 
 export const CALL_NC_a16 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  const address = state.mmu.read(++state.register.pc) + (state.mmu.read(++state.register.pc) << 8);
+
+  if (!state.flag.carry) {
+    const returnAddress = state.register.pc + 1;
+
+    state.register.sp -= 1;
+    state.mmu.write(state.register.sp, returnAddress >> 8);
+    state.register.sp -= 1;
+    state.mmu.write(state.register.sp, returnAddress & 0xFF);
+    state.register.pc = address;
+  }
 };
 
 export const CALL_C_a16 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  const address = state.mmu.read(++state.register.pc) + (state.mmu.read(++state.register.pc) << 8);
+
+  if (state.flag.carry) {
+    const returnAddress = state.register.pc + 1;
+
+    state.register.sp -= 1;
+    state.mmu.write(state.register.sp, returnAddress >> 8);
+    state.register.sp -= 1;
+    state.mmu.write(state.register.sp, returnAddress & 0xFF);
+    state.register.pc = address;
+  }
 };
 
 /* RST
