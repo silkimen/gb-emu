@@ -73,4 +73,14 @@ describe('16 bit load operation', () => {
     expect(state.mmu.read(0xFFEE)).toBe(0x1F);
     expect(state.mmu.read(0xFFEF)).toBe(0x1E);
   });
+
+  it('loads value of SP + immediate signed 8 bit value into HL', () => {
+    state.register.sp = 0x1208;
+    state.mmu.write(1, -8);
+
+    op.LDHL_SP_r8(state);
+
+    expect(state.register.hl).toBe(0x1200);
+    expect(state.register.pc).toBe(1);
+  });
 });
