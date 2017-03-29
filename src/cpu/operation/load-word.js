@@ -58,19 +58,31 @@ export const LD_a16_SP = state => {
 /* PUSH
 *******************************************/
 export const PUSH_AF = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.sp -= 1;
+  state.mmu.write(state.register.sp, state.register.a);
+  state.register.sp -= 1;
+  state.mmu.write(state.register.sp, state.register.f);
 };
 
 export const PUSH_BC = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.sp -= 1;
+  state.mmu.write(state.register.sp, state.register.b);
+  state.register.sp -= 1;
+  state.mmu.write(state.register.sp, state.register.c);
 };
 
 export const PUSH_DE = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.sp -= 1;
+  state.mmu.write(state.register.sp, state.register.d);
+  state.register.sp -= 1;
+  state.mmu.write(state.register.sp, state.register.e);
 };
 
 export const PUSH_HL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.sp -= 1;
+  state.mmu.write(state.register.sp, state.register.h);
+  state.register.sp -= 1;
+  state.mmu.write(state.register.sp, state.register.l);
 };
 
 /* POP
