@@ -3,47 +3,80 @@
 /* JR
 *******************************************/
 export const JR_r8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  const signed = (state.mmu.read(++state.register.pc) << 24) >> 24;
+
+  state.register.pc += signed;
 };
 
 export const JR_NZ_r8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  const signed = (state.mmu.read(++state.register.pc) << 24) >> 24;
+
+  if (!state.flag.zero) {
+    state.register.pc += signed;
+  }
 };
 
 export const JR_Z_r8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  const signed = (state.mmu.read(++state.register.pc) << 24) >> 24;
+
+  if (state.flag.zero) {
+    state.register.pc += signed;
+  }
 };
 
 export const JR_NC_r8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  const signed = (state.mmu.read(++state.register.pc) << 24) >> 24;
+
+  if (!state.flag.carry) {
+    state.register.pc += signed;
+  }
 };
 
 export const JR_C_r8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  const signed = (state.mmu.read(++state.register.pc) << 24) >> 24;
+
+  if (state.flag.carry) {
+    state.register.pc += signed;
+  }
 };
 
 /* RET
 *******************************************/
 export const RET = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.pc = (state.mmu.read(state.register.sp + 1 & 0xFFFF) << 8) + state.mmu.read(state.register.sp);
+  state.register.sp += 2;
 };
 
 export const RET_NZ = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  if (!state.flag.zero) {
+    state.register.pc = (state.mmu.read(state.register.sp + 1 & 0xFFFF) << 8) + state.mmu.read(state.register.sp);
+    state.register.sp += 2;
+  }
 };
 
 export const RET_Z = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  if (state.flag.zero) {
+    state.register.pc = (state.mmu.read(state.register.sp + 1 & 0xFFFF) << 8) + state.mmu.read(state.register.sp);
+    state.register.sp += 2;
+  }
 };
 
 export const RET_NC = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  if (!state.flag.carry) {
+    state.register.pc = (state.mmu.read(state.register.sp + 1 & 0xFFFF) << 8) + state.mmu.read(state.register.sp);
+    state.register.sp += 2;
+  }
 };
 
 export const RET_C = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  if (state.flag.carry) {
+    state.register.pc = (state.mmu.read(state.register.sp + 1 & 0xFFFF) << 8) + state.mmu.read(state.register.sp);
+    state.register.sp += 2;
+  }
 };
 
+/* RETI
+*******************************************/
 export const RETI = state => {
   throw new Error('NOT_IMPLEMENTED', state);
 };
