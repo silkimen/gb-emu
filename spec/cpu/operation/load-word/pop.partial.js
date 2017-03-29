@@ -13,20 +13,19 @@ beforeEach(() => {
   state = { register, flag, mmu };
 });
 
-describe('16 bit push operation', () => {
+describe('16 bit pop operation', () => {
   REG_GROUP_NAMES.forEach(group => {
     const upperName = group.toUpperCase();
 
-    it(`pushes value of ${upperName} onto stack`, () => {
+    it(`pops value from stack into ${upperName}`, () => {
       state.register.sp = 100;
-      state.register[group.charAt(0)] = 0x12;
-      state.register[group.charAt(1)] = 0x34;
+      state.mmu.write(100, 0x34);
+      state.mmu.write(101, 0x12);
 
-      op[`PUSH_${upperName}`](state);
+      op[`POP_${upperName}`].call(null, state);
 
-      expect(state.register.sp).toBe(98);
-      expect(state.mmu.read(99)).toBe(0x12);
-      expect(state.mmu.read(98)).toBe(0x34);
+      expect(state.register.sp).toBe(102);
+      expect(state.register[group]).toBe(0x1234);
     });
   });
 });

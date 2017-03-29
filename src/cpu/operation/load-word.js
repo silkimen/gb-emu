@@ -88,17 +88,29 @@ export const PUSH_HL = state => {
 /* POP
 *******************************************/
 export const POP_AF = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.f = state.mmu.read(state.register.sp);
+  state.register.sp += 1;
+  state.register.a = state.mmu.read(state.register.sp);
+  state.register.sp += 1;
 };
 
 export const POP_BC = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.c = state.mmu.read(state.register.sp);
+  state.register.sp += 1;
+  state.register.b = state.mmu.read(state.register.sp);
+  state.register.sp += 1;
 };
 
 export const POP_DE = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.e = state.mmu.read(state.register.sp);
+  state.register.sp += 1;
+  state.register.d = state.mmu.read(state.register.sp);
+  state.register.sp += 1;
 };
 
 export const POP_HL = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  state.register.l = state.mmu.read(state.register.sp);
+  state.register.sp += 1;
+  state.register.h = state.mmu.read(state.register.sp);
+  state.register.sp += 1;
 };
