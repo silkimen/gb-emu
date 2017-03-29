@@ -1,7 +1,7 @@
 const Register = require(`${__base}cpu/register`).default;
 
 const BYTE_REG_NAMES = [ 'a', 'b', 'c', 'd', 'e', 'f', 'h', 'l' ];
-const WORD_REG_NAMES = [ 'bc', 'de', 'hl', 'sp', 'pc' ];
+const WORD_REG_NAMES = [ 'af', 'bc', 'de', 'hl', 'sp', 'pc' ];
 
 let reg = null;
 

@@ -1,5 +1,5 @@
 const BYTE_REGISTER_NAMES = [ 'b', 'c', 'd', 'e', 'h', 'l', 'a', 'f' ];
-const BYTE_REGISTER_GROUPS = [ 'bc', 'de', 'hl' ];
+const BYTE_REGISTER_GROUPS = [ 'bc', 'de', 'hl', 'af' ];
 const WORD_REGISTER_NAMES = [ 'sp', 'pc' ];
 const FLAG_NAMES = [ 'zero', 'subtract', 'half', 'carry' ];
 const FLAG_MASKS = [ 0x80, 0x40, 0x20, 0x10 ];
