@@ -56,5 +56,14 @@ export const ADD_HL_HL = ADD_HL_factory('hl');
 export const ADD_HL_SP = ADD_HL_factory('sp');
 
 export const ADD_SP_r8 = state => {
-  throw new Error('NOT_IMPLEMENTED', state);
+  const signedVal = (state.mmu.read(++state.register.pc) << 24) >> 24;
+  const sum = (state.register.sp + signedVal) & 0xFFFF;
+  const carryCheck = state.register.sp ^ signedVal ^ sum;
+
+  state.register.sp = sum;
+
+  state.flag.zero = false;
+  state.flag.half = (carryCheck & 0x10) === 0x10;
+  state.flag.subtract = false;
+  state.flag.carry = (carryCheck & 0x100) === 0x100;
 };

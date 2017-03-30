@@ -82,5 +82,7 @@ describe('16 bit load operation', () => {
 
     expect(state.register.hl).toBe(0x1200);
     expect(state.register.pc).toBe(1);
+    expect(state.flag.zero).toBe(false);
+    expect(state.flag.subtract).toBe(false);
   });
 });

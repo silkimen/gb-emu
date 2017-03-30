@@ -65,4 +65,16 @@ describe('16 bit addition operation', () => {
     expect(state.flag.half).toBe(true);
     expect(state.flag.carry).toBe(true);
   });
+
+  it('adds immediate signed 8 bit value onto SP', () => {
+    state.register.sp = 0x1208;
+    state.mmu.write(1, -8);
+
+    op.ADD_SP_r8(state);
+
+    expect(state.register.sp).toBe(0x1200);
+    expect(state.register.pc).toBe(1);
+    expect(state.flag.zero).toBe(false);
+    expect(state.flag.subtract).toBe(false);
+  });
 });

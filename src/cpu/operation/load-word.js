@@ -29,12 +29,11 @@ export const LD_SP_d16 = state => {
 };
 
 export const LDHL_SP_r8 = state => {
-  const signedVal = (state.mmu.read(state.register.pc + 1) << 24) >> 24;
+  const signedVal = (state.mmu.read(++state.register.pc) << 24) >> 24;
   const sum = (state.register.sp + signedVal) & 0xFFFF;
   const carryCheck = state.register.sp ^ signedVal ^ sum;
 
   state.register.hl = sum;
-  state.register.pc += 1;
 
   state.flag.zero = false;
   state.flag.half = (carryCheck & 0x10) === 0x10;
